@@ -12,11 +12,15 @@
         <p class="product-price">£{{ productPrice }}</p>
         <div class="add-to-cart-form">
           <div class="add-to-cart-quantity">
-            <span>-</span>
-            <input type="number" readonly value="1" />
-            <span>+</span>
+            <span @click="decreaseQuantity">-</span>
+            <input type="number" readonly :value="quantity" id="quantity" />
+            <span @click="increaseQuantity">+</span>
           </div>
-          <ButtonOne class="add-to-cart-button">Add To Cart</ButtonOne>
+          <ButtonOne
+            @click="addProductToCart(productName)"
+            class="add-to-cart-button"
+            >Add To Cart</ButtonOne
+          >
         </div>
       </div>
     </div>
@@ -33,6 +37,11 @@ export default {
     href: String,
     productPriceString: Number,
   },
+  data() {
+    return {
+      quantity: 1,
+    };
+  },
   computed: {
     pageType() {
       let page;
@@ -47,6 +56,20 @@ export default {
       return this.productPriceString
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+  },
+  methods: {
+    increaseQuantity() {
+      this.quantity++;
+    },
+    decreaseQuantity() {
+      this.quantity--;
+    },
+    addProductToCart(product) {
+      this.$store.dispatch("cart/addToCart", {
+        productAdded: product,
+        quantity: this.quantity,
+      });
     },
   },
 };

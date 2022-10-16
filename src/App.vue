@@ -1,7 +1,9 @@
 <template>
   <MainNav />
   <!-- <main> -->
-  <router-view />
+  <transition name="route" mode="out-in">
+    <router-view />
+  </transition>
   <!-- </main> -->
   <TheFooter />
 </template>
@@ -14,6 +16,9 @@ export default {
   components: {
     MainNav,
     TheFooter,
+  },
+  created() {
+    this.$store.dispatch("products/allProducts");
   },
 };
 </script>
@@ -110,5 +115,29 @@ p {
   letter-spacing: 1px;
   text-transform: uppercase;
   cursor: pointer;
+}
+
+.route-enter-from {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.route-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.route-enter-active {
+  transition: all 0.7s ease-out;
+}
+
+.route-leave-active {
+  transition: all 0.7s ease-in;
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+  transform: translateY(0px);
 }
 </style>

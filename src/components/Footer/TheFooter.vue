@@ -7,13 +7,13 @@
           <a href="/">Home</a>
         </li>
         <li>
-          <a href="/">Headphones</a>
+          <a href="/headphones">Headphones</a>
         </li>
         <li>
-          <a href="/">Speakers</a>
+          <a href="/speakers">Speakers</a>
         </li>
         <li>
-          <a href="/">Earphones</a>
+          <a href="/earphones">Earphones</a>
         </li>
       </ul>
     </div>

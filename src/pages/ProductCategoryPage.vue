@@ -70,6 +70,10 @@ export default {
   margin-top: 0;
 }
 
+#shop-intro-banner {
+  margin-top: 160px;
+}
+
 .product-card:nth-child(even) {
   flex-direction: row-reverse;
 }

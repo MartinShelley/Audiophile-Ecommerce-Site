@@ -1,5 +1,10 @@
 <template>
-  <button @click="$router.push(href)" class="button buttonOne">
+  <router-link :to="href" v-if="href">
+    <button class="button buttonOne">
+      <slot>See Product</slot>
+    </button>
+  </router-link>
+  <button class="button buttonOne" v-else>
     <slot>See Product</slot>
   </button>
 </template>

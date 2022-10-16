@@ -70,11 +70,9 @@
 
 <script>
 import ProductCard from "@/components/Products/ProductCard.vue";
-import ButtonOne from "@/components/UI/Buttons/ButtonOne.vue";
 export default {
   components: {
     ProductCard,
-    ButtonOne,
   },
   data() {
     return {
@@ -88,15 +86,15 @@ export default {
       const products = await response.json();
       const category = this.productCategory;
       const productName = this.productName;
-      console.log(category);
+      // console.log(category);
       products[`${category}`].filter((product) => {
         console.log(productName);
         if (product.slug === productName) {
-          console.log("match");
+          // console.log("match");
           this.productDetails = product;
         }
       });
-      console.log(this.productDetails);
+      // console.log(this.productDetails);
     },
   },
   computed: {
