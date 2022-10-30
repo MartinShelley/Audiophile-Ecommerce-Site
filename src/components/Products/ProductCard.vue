@@ -11,9 +11,9 @@
       <div class="product-add-to-cart" v-else-if="pageType === 'productDetail'">
         <p class="product-price">£{{ productPrice }}</p>
         <div class="add-to-cart-form">
-          <div class="add-to-cart-quantity">
+          <div class="product-quantity">
             <span @click="decreaseQuantity">-</span>
-            <input type="number" readonly :value="quantity" id="quantity" />
+            <input type="number" :value="this.quantity" id="quantity" min="1" />
             <span @click="increaseQuantity">+</span>
           </div>
           <ButtonOne
@@ -59,17 +59,29 @@ export default {
     },
   },
   methods: {
+    addProductToCart(product) {
+      this.$store
+        .dispatch("cart/addToCart", {
+          productAdded: product,
+          quantity: this.quantity,
+          productPrice: parseInt(this.productPriceString),
+        })
+        .then(() => {
+          const addToCartButton = document.querySelector(".add-to-cart-button");
+          addToCartButton.innerText = "ADDED TO CART";
+          addToCartButton.style.opacity = 0.5;
+        });
+    },
     increaseQuantity() {
       this.quantity++;
     },
     decreaseQuantity() {
-      this.quantity--;
+      if (this.quantity > 1) {
+        this.quantity--;
+      }
     },
-    addProductToCart(product) {
-      this.$store.dispatch("cart/addToCart", {
-        productAdded: product,
-        quantity: this.quantity,
-      });
+    getQuantity(value) {
+      this.quantity = value;
     },
   },
 };
@@ -120,7 +132,8 @@ export default {
       }
       .add-to-cart-form {
         display: flex;
-        .add-to-cart-quantity {
+
+        .product-quantity {
           display: grid;
           width: 120px;
           grid-template-columns: 1fr 1fr 1fr;
@@ -138,6 +151,7 @@ export default {
           }
 
           input {
+            height: 32px;
             border: none;
             max-width: 40px;
             background-color: #f1f1f1;

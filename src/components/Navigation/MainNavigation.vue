@@ -18,16 +18,19 @@
           <router-link to="/earphones">Earphones</router-link>
         </li>
       </ul>
-      <svg
-        @click="cart"
-        width="23"
-        height="20"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M8.625 15.833c1.132 0 2.054.935 2.054 2.084 0 1.148-.922 2.083-2.054 2.083-1.132 0-2.054-.935-2.054-2.083 0-1.15.922-2.084 2.054-2.084zm9.857 0c1.132 0 2.054.935 2.054 2.084 0 1.148-.922 2.083-2.054 2.083-1.132 0-2.053-.935-2.053-2.083 0-1.15.92-2.084 2.053-2.084zm-9.857 1.39a.69.69 0 00-.685.694.69.69 0 00.685.694.69.69 0 00.685-.694.69.69 0 00-.685-.695zm9.857 0a.69.69 0 00-.684.694.69.69 0 00.684.694.69.69 0 00.685-.694.69.69 0 00-.685-.695zM4.717 0c.316 0 .59.215.658.517l.481 2.122h16.47a.68.68 0 01.538.262c.127.166.168.38.11.579l-2.695 9.236a.672.672 0 01-.648.478H7.41a.667.667 0 00-.673.66c0 .364.303.66.674.66h12.219c.372 0 .674.295.674.66 0 .364-.302.66-.674.66H7.412c-1.115 0-2.021-.889-2.021-1.98 0-.812.502-1.511 1.218-1.816L4.176 1.32H.674A.667.667 0 010 .66C0 .296.302 0 .674 0zm16.716 3.958H6.156l1.797 7.917h11.17l2.31-7.917z"
-        />
-      </svg>
+      <div class="cart-icon">
+        <svg
+          @click="cart"
+          width="23"
+          height="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8.625 15.833c1.132 0 2.054.935 2.054 2.084 0 1.148-.922 2.083-2.054 2.083-1.132 0-2.054-.935-2.054-2.083 0-1.15.922-2.084 2.054-2.084zm9.857 0c1.132 0 2.054.935 2.054 2.084 0 1.148-.922 2.083-2.054 2.083-1.132 0-2.053-.935-2.053-2.083 0-1.15.92-2.084 2.053-2.084zm-9.857 1.39a.69.69 0 00-.685.694.69.69 0 00.685.694.69.69 0 00.685-.694.69.69 0 00-.685-.695zm9.857 0a.69.69 0 00-.684.694.69.69 0 00.684.694.69.69 0 00.685-.694.69.69 0 00-.685-.695zM4.717 0c.316 0 .59.215.658.517l.481 2.122h16.47a.68.68 0 01.538.262c.127.166.168.38.11.579l-2.695 9.236a.672.672 0 01-.648.478H7.41a.667.667 0 00-.673.66c0 .364.303.66.674.66h12.219c.372 0 .674.295.674.66 0 .364-.302.66-.674.66H7.412c-1.115 0-2.021-.889-2.021-1.98 0-.812.502-1.511 1.218-1.816L4.176 1.32H.674A.667.667 0 010 .66C0 .296.302 0 .674 0zm16.716 3.958H6.156l1.797 7.917h11.17l2.31-7.917z"
+          />
+        </svg>
+        <span class="cart-quantity-icon">{{ cartQuantity }}</span>
+      </div>
     </nav>
     <div class="cart" v-show="showCart">
       <div class="cart-background" @click="cart"></div>
@@ -43,15 +46,27 @@
           <h6>Your Shopping Cart is empty</h6>
         </div>
         <div class="cart-content" v-else>
-          <div>
-            <p v-for="product in getProductsInCart" :key="product.name">
-              {{ product.productName }}, {{ product.quantity }},
-              {{ product.cartImage }},
-              {{ product.price }}
-            </p>
+          <ul>
+            <li v-for="product in getProductsInCart" :key="product.productName">
+              <div class="cart-product">
+                <img :src="require(`../../${product.cartImage}`)" />
+                <div class="cart-product-details">
+                  <h6>{{ product.shortName }}</h6>
+                  <p>£{{ product.productPriceString }}</p>
+                </div>
+              </div>
+              <div class="cart-quantity">
+                <span @click="decreaseQuantity(product.productName)">-</span>
+                <input type="number" :value="product.quantity" id="quantity" />
+                <span @click="increaseQuantity(product.productName)">+</span>
+              </div>
+            </li>
+          </ul>
+          <div class="cart-total">
+            <p class="cart-total-label">Total</p>
+            <h6>£{{ cartTotal }}</h6>
           </div>
-          <div class="cart-total"></div>
-          <ButtonOne />
+          <ButtonOne>Checkout</ButtonOne>
         </div>
       </div>
     </div>
@@ -64,7 +79,6 @@ export default {
   data() {
     return {
       showCart: false,
-      cartQuantity: 0,
     };
   },
   methods: {
@@ -74,11 +88,28 @@ export default {
     removeAll() {
       this.$store.dispatch("cart/removeAllFromCart");
     },
+    increaseQuantity(product) {
+      this.$store.dispatch("cart/increaseProductQuantity", {
+        productName: product,
+      });
+    },
+    decreaseQuantity(product) {
+      this.$store.dispatch("cart/decreaseProductQuantity", {
+        productName: product,
+      });
+    },
   },
   computed: {
     ...mapGetters("cart", {
       getProductsInCart: "getProductsInCart",
+      cartQuantity: "cartQuantity",
+      cartTotalPrice: "cartTotalPrice",
     }),
+    cartTotal() {
+      return this.cartTotalPrice
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
   },
 };
 </script>
@@ -89,7 +120,7 @@ header {
   position: relative;
   top: 0px;
   width: 100%;
-  background-color: #141414;
+  background-color: #141313;
   // opacity: 0.9;
   z-index: 1;
   nav {
@@ -125,13 +156,31 @@ header {
         }
       }
     }
-    svg {
-      padding: 15px;
-      fill: white;
-    }
-    svg:hover {
-      fill: #d87d4a;
-      cursor: pointer;
+
+    .cart-icon {
+      display: flex;
+      svg {
+        padding: 15px;
+        fill: white;
+      }
+      svg:hover {
+        fill: #d87d4a;
+        cursor: pointer;
+      }
+      .cart-quantity-icon {
+        color: white;
+        font-size: 10px;
+        background-color: #d87d4a;
+        border-radius: 50%;
+        /* padding: 2px 5px; */
+        height: 15px;
+        width: 15px;
+        display: flex;
+        font-weight: 600;
+        justify-content: center;
+        position: relative;
+        right: 25%;
+      }
     }
   }
 
@@ -154,6 +203,7 @@ header {
       width: 377px;
       // height: 488px;
       padding: 31px 32px;
+      border-radius: 8px;
 
       .cart-header {
         display: flex;
@@ -178,6 +228,86 @@ header {
       .cart-no-products {
         h6 {
           color: #d87d4a;
+        }
+      }
+
+      .cart-content {
+        ul {
+          li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            justify-content: space-between;
+
+            .cart-product {
+              display: flex;
+              align-items: center;
+
+              img {
+                max-width: 64px;
+                border-radius: 8px;
+                margin-right: 16px;
+              }
+
+              .cart-product-details {
+                display: flex;
+                flex-direction: column;
+
+                p {
+                  opacity: 0.5;
+                }
+              }
+            }
+            .cart-quantity {
+              display: grid;
+              width: 120px;
+              grid-template-columns: 1fr 1fr 1fr;
+              column-width: 40px;
+              background-color: #f1f1f1;
+              justify-items: center;
+              align-items: center;
+
+              span {
+                opacity: 25%;
+              }
+
+              span:hover {
+                cursor: pointer;
+              }
+
+              input {
+                height: 32px;
+                border: none;
+                max-width: 40px;
+                background-color: #f1f1f1;
+                font-weight: 700;
+                font-size: 13px;
+                line-height: 18px;
+                text-align: right;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+              }
+            }
+          }
+        }
+
+        .cart-total {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 24px;
+          .cart-total-label {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 25px;
+            letter-spacing: 0px;
+            text-align: left;
+            text-transform: uppercase;
+            opacity: 0.5;
+          }
+        }
+        button {
+          width: 100%;
         }
       }
     }

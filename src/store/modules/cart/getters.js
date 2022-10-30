@@ -15,9 +15,11 @@ export default {
             // console.log(allProducts[category][i].name + "matches" + cartProducts[j]);
             cartDetails.push({
               "productName": allProducts[category][i].name,
+              "shortName": allProducts[category][i].shortName,
               "quantity": cartProducts[j].quantity,
               "cartImage": allProducts[category][i].cartImage,
-              "price": allProducts[category][i].price
+              "price": allProducts[category][i].price,
+              "productPriceString": cartProducts[j].productPriceString
             })
           }
         }
@@ -27,5 +29,8 @@ export default {
   },
   cartQuantity(state) {
     return state.cartQuantity;
+  },
+  cartTotalPrice(state) {
+    return state.cartTotal;
   }
 }

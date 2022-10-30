@@ -18,7 +18,7 @@
 section {
   display: flex;
   padding: 0 165px;
-  background-color: #141414;
+  background-color: #141313;
   min-height: 729px;
   // background-image: url("../../assets/home/desktop/image-hero-original.jpg");
   // background-image: url("../../assets/home/desktop/Hero-figma.png");
@@ -42,7 +42,7 @@ section {
     }
 
     p {
-      margin: 0;
+      margin: 0 0 40px;
       opacity: 0.75;
       padding-right: 49px;
     }

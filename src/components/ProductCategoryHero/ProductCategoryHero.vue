@@ -19,7 +19,7 @@ header {
 
 #category-hero {
   display: flex;
-  background-color: #141414;
+  background-color: #141313;
   justify-content: center;
   align-items: center;
   min-height: 239px;

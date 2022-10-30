@@ -56,6 +56,7 @@ export default {
   grid-template-rows: 560px 320px 320px;
   row-gap: 48px;
   column-gap: 30px;
+  margin-bottom: 200px;
 
   #zx9-speaker {
     grid-column: 1 / 3;
