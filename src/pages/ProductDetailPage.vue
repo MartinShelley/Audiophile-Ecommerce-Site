@@ -7,23 +7,23 @@
     </div>
     <section>
       <ProductCard
-        :key="productDetails.id"
-        :productName="productDetails.name"
-        :productDesc="productDetails.description"
-        :newProduct="productDetails.new"
-        :productDesktopImage="productDetails.image.desktop"
-        :productPriceString="productDetails.price"
+        :key="activeProduct.id"
+        :productName="activeProduct.name"
+        :productDesc="activeProduct.description"
+        :newProduct="activeProduct.new"
+        :productDesktopImage="activeProduct.image.desktop"
+        :productPriceString="activeProduct.price"
       />
     </section>
     <section class="product-description">
       <div class="product-features">
         <h3>Features</h3>
-        <p>{{ productDetails.features }}</p>
+        <p>{{ activeProduct.features }}</p>
       </div>
       <div class="product-in-the-box">
         <h3>In the box</h3>
         <ul>
-          <li v-for="(item, index) in productDetails.includes" :key="index">
+          <li v-for="(item, index) in activeProduct.includes" :key="index">
             <span class="includes-quantity">{{ item.quantity }}x</span>
             <span class="includes-item">{{ item.item }}</span>
           </li>
@@ -34,15 +34,15 @@
       <div>
         <img
           class="product-image-one"
-          :src="require(`@/${productDetails.gallery.first.desktop}`)"
+          :src="require(`@/${activeProduct.gallery.first.desktop}`)"
         />
         <img
           class="product-image-two"
-          :src="require(`@/${productDetails.gallery.second.desktop}`)"
+          :src="require(`@/${activeProduct.gallery.second.desktop}`)"
         />
         <img
           class="product-image-three"
-          :src="require(`@/${productDetails.gallery.third.desktop}`)"
+          :src="require(`@/${activeProduct.gallery.third.desktop}`)"
         />
       </div>
     </section>
@@ -53,7 +53,7 @@
       <div class="you-may-also-like-products">
         <div
           class="you-may-also-like-product"
-          v-for="product in productDetails.others"
+          v-for="product in activeProduct.others"
           :key="product.name"
         >
           <img :src="require(`@/${product.image.desktop}`)" />
@@ -70,51 +70,33 @@
 
 <script>
 import ProductCard from "@/components/Products/ProductCard.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ProductCard,
   },
-  data() {
-    return {
-      productDetails: {},
-      isPageLoading: false,
-    };
-  },
-  methods: {
-    async getProductDetails() {
-      const response = await fetch("http://localhost:3000/products");
-      const products = await response.json();
+  computed: {
+    ...mapGetters("products", {
+      getAllProducts: "getAllProducts",
+    }),
+    activeProduct() {
+      let activeProduct;
+      const products = this.getAllProducts;
       const category = this.productCategory;
       const productName = this.productName;
-      // console.log(category);
-      products[`${category}`].filter((product) => {
-        console.log(productName);
+      products[category].filter((product) => {
         if (product.slug === productName) {
-          // console.log("match");
-          this.productDetails = product;
+          activeProduct = product;
         }
       });
-      // console.log(this.productDetails);
+      return activeProduct;
     },
-  },
-  computed: {
     productName() {
       return this.$route.params.product;
     },
     productCategory() {
       return this.$route.meta.productCategory;
     },
-  },
-  created() {
-    this.isPageLoading = true;
-    this.getProductDetails();
-    this.$watch(
-      () => this.$route.params,
-      () => {
-        this.getProductDetails();
-      }
-    );
-    this.isPageLoading = false;
   },
 };
 </script>

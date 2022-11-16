@@ -1,5 +1,6 @@
 <template>
   <footer>
+    <div class="footer-line"></div>
     <div class="footer-nav">
       <a href="/"><img src="@/assets/shared/desktop/logo.svg" /></a>
       <ul>
@@ -72,11 +73,18 @@ footer {
   margin-top: 200px;
   background-color: #101010;
   height: 365px;
+  padding: 0 165px;
+
+  .footer-line {
+    background-color: #d87d4a;
+    height: 4px;
+    width: 101px;
+  }
 
   .footer-nav {
     display: flex;
     justify-content: space-between;
-    padding: 75px 165px 36px;
+    padding: 75px 0px 36px;
 
     ul {
       display: flex;
@@ -104,7 +112,7 @@ footer {
     grid-template-columns: 46% 54%;
     grid-template-rows: 1fr auto;
     row-gap: 56px;
-    padding: 0 165px;
+    // padding: 0 165px;
 
     .body-copy {
       color: #fff;

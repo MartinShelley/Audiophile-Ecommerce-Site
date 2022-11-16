@@ -1,7 +1,7 @@
 <template>
   <section id="homepage-hero">
     <div class="hero-text">
-      <p class="subTitle">New Product</p>
+      <p class="overline">New Product</p>
       <h1>XX99 Mark II Headphones</h1>
       <p>
         Experience natural, lifelike audio and exceptional build quality made
@@ -9,7 +9,22 @@
       </p>
       <ButtonOne href="/headphones/xx99-mark-two-headphones" />
     </div>
-    <img src="../../assets/home/desktop/Hero-figma.png" />
+    <picture>
+      <source
+        media="(min-width:1024px)"
+        srcset="@/assets/home/desktop/Hero-figma.png"
+      />
+      <source
+        media="(min-width:768px)"
+        srcset="@/assets/home/tablet/image-header.jpg"
+      />
+      <source srcset="@/assets/home/mobile/image-header.jpg" />
+      <img
+        src="@/assets/home/desktop/Hero-figma.png"
+        alt="X99 Mark 2 Headphones"
+        style="width: auto"
+      />
+    </picture>
     <!-- <img src="../../assets/home/desktop/image-hero-original.jpg" /> -->
   </section>
 </template>
@@ -20,18 +35,14 @@ section {
   padding: 0 165px;
   background-color: #141313;
   min-height: 729px;
-  // background-image: url("../../assets/home/desktop/image-hero-original.jpg");
-  // background-image: url("../../assets/home/desktop/Hero-figma.png");
-  // background-size: cover;
-  // background-repeat: no-repeat;
-
   .hero-text {
     color: #fff;
     max-width: 398px;
     position: relative;
     top: 128px;
 
-    .subTitle {
+    .overline {
+      color: #fff;
       opacity: 0.5;
       text-transform: uppercase;
     }
@@ -54,6 +65,53 @@ section {
 
   button {
     margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  section {
+    padding: 0;
+    justify-content: center;
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      max-width: 346px;
+      transform: translateY(25%);
+
+      .overline {
+        margin-bottom: 24px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 0;
+      }
+
+      p {
+        text-align: center;
+        padding-right: 0;
+      }
+    }
+
+    img {
+      transform: unset;
+      max-width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  section {
+    padding: 0;
+
+    .hero-text {
+      h1 {
+        font-size: 36px;
+      }
+    }
   }
 }
 </style>

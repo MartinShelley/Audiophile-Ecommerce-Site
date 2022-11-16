@@ -17,9 +17,16 @@
             <span @click="increaseQuantity">+</span>
           </div>
           <ButtonOne
+            v-if="!this.addedToCart"
             @click="addProductToCart(productName)"
             class="add-to-cart-button"
             >Add To Cart</ButtonOne
+          >
+          <ButtonOne
+            v-else-if="this.addedToCart"
+            @click="addProductToCart(productName)"
+            class="added-to-cart"
+            >Added To Cart</ButtonOne
           >
         </div>
       </div>
@@ -39,6 +46,7 @@ export default {
   },
   data() {
     return {
+      addedToCart: false,
       quantity: 1,
     };
   },
@@ -57,6 +65,10 @@ export default {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
+    // toggleAddedToCart() {
+    //   const toggle = false;
+    //   return !this.addedToCart;
+    // }
   },
   methods: {
     addProductToCart(product) {
@@ -67,10 +79,13 @@ export default {
           productPrice: parseInt(this.productPriceString),
         })
         .then(() => {
-          const addToCartButton = document.querySelector(".add-to-cart-button");
-          addToCartButton.innerText = "ADDED TO CART";
-          addToCartButton.style.opacity = 0.5;
+          const refThis = this;
+          this.toggleAddedToCart();
+          setTimeout(function () {
+            refThis.toggleAddedToCart();
+          }, 2000);
         });
+      this.$store.commit("cart/toggleShowCart");
     },
     increaseQuantity() {
       this.quantity++;
@@ -82,6 +97,9 @@ export default {
     },
     getQuantity(value) {
       this.quantity = value;
+    },
+    toggleAddedToCart() {
+      this.addedToCart = !this.addedToCart;
     },
   },
 };
@@ -165,6 +183,10 @@ export default {
         }
         .add-to-cart-button {
           margin-left: 16px;
+        }
+        .added-to-cart {
+          margin-left: 16px;
+          opacity: 0.5;
         }
       }
     }

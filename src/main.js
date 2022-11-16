@@ -18,3 +18,5 @@ app.component('ProductCard', ProductCard);
 app.component('ButtonOne', ButtonOne);
 
 app.mount('#app');
+
+

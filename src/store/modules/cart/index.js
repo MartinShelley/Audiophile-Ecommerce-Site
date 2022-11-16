@@ -9,9 +9,11 @@ export default {
       cartQuantity: 0,
       cartTotal: 0,
       productsInCart: [],
+      showCart: false
     }
   },
   mutations,
   actions,
   getters
 }
+

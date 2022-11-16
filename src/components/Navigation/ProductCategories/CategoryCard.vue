@@ -6,6 +6,18 @@
     @mouseleave="isCardHovering = false"
   >
     <div class="categoryImg">
+      <!-- <picture>
+          <source
+            :srcset="desktopImgUrl"
+            media="(min-width: 1024px)"
+          />
+          <source
+            :srcset="tabletImgUrl"
+            media="(min-width: 768px)"
+          />
+          <source :srcset="mobileImgUrl" />
+          <img :src="desktopImgUrl" />
+        </picture> -->
       <img :src="imgUrl" />
     </div>
     <div class="cardContent">
@@ -32,6 +44,15 @@ export default {
   computed: {
     imgUrl() {
       return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
+    },
+    desktopImgUrl() {
+      return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
+    },
+    tabletImgUrl() {
+      return require(`@/assets/shared/tablet/image-category-thumbnail-${this.productCategory}.png`);
+    },
+    mobileImgUrl() {
+      return require(`@/assets/shared/mobile/image-category-thumbnail-${this.productCategory}.png`);
     },
   },
 };
@@ -78,5 +99,11 @@ export default {
 
 .categoryCard:hover + .button {
   color: #d87d4a;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .categoryCard {
+    width: 223px;
+  }
 }
 </style>

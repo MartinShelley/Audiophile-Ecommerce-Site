@@ -11,7 +11,18 @@
         to buy your portable audio equipment.
       </p>
     </div>
-    <img src="@/assets/shared/desktop/image-best-gear.jpg" />
+    <picture>
+      <source
+        srcset="@/assets/shared/desktop/image-best-gear.jpg"
+        media="(min-width: 1024px)"
+      />
+      <source
+        srcset="@/assets/shared/tablet/image-best-gear.jpg"
+        media="(min-width: 481px)"
+      />
+      <source srcset="@/assets/shared/mobile/image-best-gear.jpg" />
+      <img src="@/assets/shared/desktop/image-best-gear.jpg" />
+    </picture>
   </section>
 </template>
 
@@ -44,6 +55,35 @@
 
   img {
     border-radius: 8px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  #shop-intro-banner {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0 40px;
+
+    .banner-content {
+      margin-top: 63px;
+      text-align: center;
+      max-width: 573px;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #shop-intro-banner {
+    .banner-content {
+      max-width: 327px;
+      h2 {
+        font-size: 28px;
+      }
+    }
   }
 }
 </style>

@@ -1,5 +1,5 @@
 export default {
-  updateAllProducts(state, payload) {
-    state.allProducts = payload;
-  }
+  setProductData(state, payload) {
+    state.products = payload;
+  },
 }

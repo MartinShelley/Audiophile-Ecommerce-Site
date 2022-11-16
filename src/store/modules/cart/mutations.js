@@ -18,6 +18,16 @@ export default {
     state.quantity = 0;
     state.cartTotal = 0;
   },
+  toggleShowCart(state) {
+    state.showCart = !state.showCart;
+    if (state.showCart === true) {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  },
   updateProductQuantity(state, payload) {
     state.productsInCart.find(product => {
       if (product.productName == payload.productName) {
@@ -30,5 +40,8 @@ export default {
   },
   updateCartTotal(state, payload) {
     state.cartTotal = payload.newCartTotal;
+  },
+  getProductsInCart(state, payload) {
+    state.productsInCart = payload;
   }
 }

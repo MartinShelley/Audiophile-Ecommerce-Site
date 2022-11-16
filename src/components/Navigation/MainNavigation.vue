@@ -1,10 +1,18 @@
 <template>
   <header>
     <nav>
-      <router-link to="/"
-        ><img src="../../assets/shared/desktop/logo.svg"
-      /></router-link>
-      <ul>
+      <div id="navigation-icons">
+        <img
+          src="@/assets/shared/tablet/icon-hamburger.svg"
+          alt="Main Navigation"
+          id="hamburger-menu-icon"
+          @click="toggleMobileNavigation"
+        />
+        <router-link to="/"
+          ><img src="../../assets/shared/desktop/logo.svg"
+        /></router-link>
+      </div>
+      <ul id="desktop-navigation">
         <li>
           <router-link to="/">Home</router-link>
         </li>
@@ -18,6 +26,9 @@
           <router-link to="/earphones">Earphones</router-link>
         </li>
       </ul>
+      <div id="mobile-navigation" v-show="showMobileNav">
+        <ProductCategoriesNav />
+      </div>
       <div class="cart-icon">
         <svg
           @click="cart"
@@ -66,7 +77,9 @@
             <p class="cart-total-label">Total</p>
             <h6>£{{ cartTotal }}</h6>
           </div>
-          <ButtonOne>Checkout</ButtonOne>
+          <ButtonOne href="/checkout" :style="fullWidth" @click="cart"
+            >Checkout</ButtonOne
+          >
         </div>
       </div>
     </div>
@@ -75,15 +88,20 @@
 
 <script>
 import { mapGetters } from "vuex";
+import ProductCategoriesNav from "../Navigation/ProductCategories/ProductCategoriesNav.vue";
 export default {
+  components: {
+    ProductCategoriesNav,
+  },
   data() {
     return {
-      showCart: false,
+      fullWidth: "100%",
+      showMobileNav: false,
     };
   },
   methods: {
     cart() {
-      this.showCart = !this.showCart;
+      this.$store.commit("cart/toggleShowCart");
     },
     removeAll() {
       this.$store.dispatch("cart/removeAllFromCart");
@@ -98,12 +116,16 @@ export default {
         productName: product,
       });
     },
+    toggleMobileNavigation() {
+      this.showMobileNav = !this.showMobileNav;
+    },
   },
   computed: {
     ...mapGetters("cart", {
       getProductsInCart: "getProductsInCart",
       cartQuantity: "cartQuantity",
       cartTotalPrice: "cartTotalPrice",
+      showCart: "showCart",
     }),
     cartTotal() {
       return this.cartTotalPrice
@@ -121,17 +143,20 @@ header {
   top: 0px;
   width: 100%;
   background-color: #141313;
-  // opacity: 0.9;
   z-index: 1;
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    // filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     height: 97px;
     margin: 0 165px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 
+    #navigation-icons {
+      a {
+        display: flex;
+      }
+    }
     ul {
       display: flex;
       gap: 34px;
@@ -156,7 +181,9 @@ header {
         }
       }
     }
-
+    #hamburger-menu-icon {
+      display: none;
+    }
     .cart-icon {
       display: flex;
       svg {
@@ -187,7 +214,7 @@ header {
   .cart {
     .cart-background {
       position: fixed;
-      top: 97px;
+      top: 0px;
       bottom: 0;
       left: 0;
       right: 0;
@@ -201,7 +228,6 @@ header {
       right: 165px;
       background-color: #fff;
       width: 377px;
-      // height: 488px;
       padding: 31px 32px;
       border-radius: 8px;
 
@@ -306,9 +332,41 @@ header {
             opacity: 0.5;
           }
         }
+
         button {
           width: 100%;
         }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1023px) {
+  header {
+    position: absolute;
+    background-color: unset;
+    nav {
+      height: 89px;
+      margin: 0 40px;
+      #navigation-icons {
+        display: flex;
+        align-items: center;
+        gap: 42px;
+        #hamburger-menu-icon {
+          display: block;
+          width: 16px;
+          height: 15px;
+        }
+      }
+      #desktop-navigation {
+        display: none;
+      }
+      #mobile-navigation {
+        position: absolute;
+        width: 100%;
+        top: 89px;
+        left: 0;
+        background-color: #fafafa;
+        z-index: 5;
       }
     }
   }

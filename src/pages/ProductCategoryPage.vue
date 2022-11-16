@@ -19,40 +19,21 @@
 
 <script>
 import ProductCategoryHero from "@/components/ProductCategoryHero/ProductCategoryHero.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     ProductCategoryHero,
   },
-  data() {
-    return {
-      categoryProducts: {},
-      isPageLoading: false,
-    };
-  },
-  methods: {
-    async getCategoryProducts() {
-      const response = await fetch("http://localhost:3000/products");
-      const products = await response.json();
-
-      const category = this.productCategory;
-      this.categoryProducts = products[category];
-    },
-  },
   computed: {
+    ...mapGetters("products", {
+      getAllProducts: "getAllProducts",
+    }),
+    categoryProducts() {
+      return this.getAllProducts[this.productCategory];
+    },
     productCategory() {
       return this.$route.name;
     },
-  },
-  created() {
-    this.isPageLoading = true;
-    this.getCategoryProducts();
-    this.$watch(
-      () => this.$route.params,
-      () => {
-        this.getCategoryProducts();
-      }
-    );
-    this.isPageLoading = false;
   },
 };
 </script>

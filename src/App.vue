@@ -1,11 +1,11 @@
 <template>
-  <MainNav />
-  <!-- <main> -->
-  <transition name="route" mode="out-in">
-    <router-view />
-  </transition>
-  <!-- </main> -->
-  <TheFooter />
+  <body>
+    <MainNav />
+    <transition name="route" mode="out-in">
+      <router-view />
+    </transition>
+    <TheFooter />
+  </body>
 </template>
 
 
@@ -18,7 +18,27 @@ export default {
     TheFooter,
   },
   created() {
-    this.$store.dispatch("products/allProducts");
+    this.$store.dispatch("products/getProductDetails");
+  },
+  beforeMount() {
+    if (localStorage.getItem("productsInCart")) {
+      const getPreviouslyAddedProducts = JSON.parse(
+        localStorage.productsInCart
+      );
+      this.$store.commit("cart/getProductsInCart", getPreviouslyAddedProducts);
+      let cartTotal = 0;
+      let cartQuantity = 0;
+      getPreviouslyAddedProducts.forEach((product) => {
+        cartTotal = cartTotal + product.productPrice * product.quantity;
+        cartQuantity = cartQuantity + product.quantity;
+      });
+      this.$store.commit("cart/updateCartTotal", {
+        newCartTotal: cartTotal,
+      });
+      this.$store.commit("cart/updateCartQuantity", {
+        quantity: cartQuantity,
+      });
+    }
   },
 };
 </script>
@@ -34,6 +54,7 @@ export default {
 
 body {
   margin: 0px;
+  // overflow-x: hidden;
 }
 
 // main {
@@ -99,7 +120,7 @@ p {
 }
 
 .subTitle {
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 10px;
   line-height: 19px;
   font-weight: 400;

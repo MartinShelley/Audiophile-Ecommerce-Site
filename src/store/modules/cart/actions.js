@@ -5,7 +5,6 @@ export default {
       product.productName == payload.productAdded
     );
     const productPriceString = payload.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    console.log(payload);
 
     if (!productExists) {
       commit("updateCart", { name: payload.productAdded, quantity: payload.quantity, productPriceString: productPriceString, productPrice: payload.productPrice });

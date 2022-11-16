@@ -1,6 +1,6 @@
 <template>
   <router-link :to="href" v-if="href">
-    <button class="button buttonOne">
+    <button class="button buttonOne" :style="fullWidthStyling">
       <slot>See Product</slot>
     </button>
   </router-link>
@@ -11,7 +11,14 @@
 
 <script>
 export default {
-  props: ["href"],
+  props: ["href", "style"],
+  computed: {
+    fullWidthStyling() {
+      return {
+        width: this.style,
+      };
+    },
+  },
 };
 </script>
 

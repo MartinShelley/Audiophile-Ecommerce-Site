@@ -26,9 +26,18 @@ export default {
 <style lang="scss" scoped>
 #product-categories-nav {
   display: flex;
-  padding: 120px 165px 168px;
+  margin: 120px auto 168px;
   width: 1110px;
-  margin: 0 auto;
   gap: 30px;
+  max-width: 100%;
+  justify-content: center;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  #product-categories-nav {
+    width: unset;
+    gap: 10px;
+    padding: 0px;
+  }
 }
 </style>

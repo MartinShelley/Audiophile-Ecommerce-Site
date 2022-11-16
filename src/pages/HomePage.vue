@@ -4,7 +4,18 @@
     <ProductCategoryNav />
     <section id="product-banners">
       <div id="zx9-speaker">
-        <img src="@/assets/home/desktop/zx9-speaker-image.png" />
+        <picture>
+          <source
+            srcset="@/assets/home/desktop/zx9-speaker-image.png"
+            media="(min-width: 1024px)"
+          />
+          <source
+            srcset="@/assets/home/tablet/image-speaker-zx9.png"
+            media="(min-width: 768px)"
+          />
+          <source srcset="@/assets/home/mobile/image-speaker-zx9.png" />
+          <img src="@/assets/home/desktop/zx9-speaker-image.png" />
+        </picture>
         <div class="banner-content">
           <h2>zx9 speaker</h2>
           <p>
@@ -155,6 +166,18 @@ export default {
           margin-bottom: 32px;
         }
       }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  #product-banners {
+    padding: 0 40px;
+    grid-template-rows: 720px 320px 320px;
+
+    #zx9-speaker {
+      display: flex;
+      flex-direction: column;
     }
   }
 }
