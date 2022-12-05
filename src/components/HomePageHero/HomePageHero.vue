@@ -106,10 +106,17 @@ section {
 @media screen and (max-width: 415px) {
   section {
     padding: 0;
+    min-height: unset;
 
     .hero-text {
+      max-width: 328px;
+      .overline {
+        margin-bottom: 16px;
+      }
       h1 {
         font-size: 36px;
+        line-height: 40px;
+        letter-spacing: 1.29px;
       }
     }
   }

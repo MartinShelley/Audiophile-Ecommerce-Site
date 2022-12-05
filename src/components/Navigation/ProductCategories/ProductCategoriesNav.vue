@@ -33,11 +33,23 @@ export default {
   justify-content: center;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (min-width: 769px) and (max-width: 1023px) {
   #product-categories-nav {
-    width: unset;
-    gap: 10px;
     padding: 0px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #product-categories-nav {
+    gap: 10px;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  #product-categories-nav {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
   }
 }
 </style>

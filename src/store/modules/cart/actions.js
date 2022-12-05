@@ -47,6 +47,7 @@ export default {
   },
   removeAllFromCart({ commit }) {
     commit("removeAllFromCart");
+    commit("resetCartQuantity");
   },
   updateCartTotalPrice({ commit, state }, payload) {
     const cartNewTotal = state.cartTotal + payload.productPrice * payload.quantity;

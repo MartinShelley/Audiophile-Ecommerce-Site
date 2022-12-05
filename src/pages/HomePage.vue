@@ -6,15 +6,15 @@
       <div id="zx9-speaker">
         <picture>
           <source
-            srcset="@/assets/home/desktop/zx9-speaker-image.png"
-            media="(min-width: 1024px)"
+            srcset="@/assets/home/desktop/zx9-speaker-image(2).png"
+            media="(min-width:1024px)"
           />
           <source
-            srcset="@/assets/home/tablet/image-speaker-zx9.png"
-            media="(min-width: 768px)"
+            srcset="@/assets/home/tablet/image-speaker-zx9(2).png"
+            media="(min-width:768px)"
           />
-          <source srcset="@/assets/home/mobile/image-speaker-zx9.png" />
-          <img src="@/assets/home/desktop/zx9-speaker-image.png" />
+          <source srcset="@/assets/home/mobile/image-speaker-zx9(2).png" />
+          <img src="@/assets/home/desktop/zx9-speaker-image(2).png" />
         </picture>
         <div class="banner-content">
           <h2>zx9 speaker</h2>
@@ -26,15 +26,36 @@
         </div>
       </div>
       <div id="zx7-speaker">
-        <div class="zx7-speaker-banner">
-          <div class="zx7-content">
-            <h4>zx7 speaker</h4>
-            <ButtonTwo href="/speakers/zx7-speaker" />
-          </div>
+        <div class="zx7-content">
+          <h4>zx7 speaker</h4>
+          <ButtonTwo href="/speakers/zx7-speaker" />
         </div>
+        <picture>
+          <source
+            srcset="@/assets/home/desktop/image-speaker-zx7.jpg"
+            media="(min-width:1024px)"
+          />
+          <source
+            srcset="@/assets/home/tablet/image-speaker-zx7.jpg"
+            media="(min-width:768px)"
+          />
+          <source srcset="@/assets/home/mobile/image-speaker-zx7.jpg" />
+          <img src="@/assets/home/desktop/image-speaker-zx7.jpg" />
+        </picture>
       </div>
       <div id="yx1-earphones">
-        <img src="@/assets/home/desktop/image-earphones-yx1.jpg" />
+        <picture>
+          <source
+            srcset="@/assets/home/desktop/image-earphones-yx1.jpg"
+            media="(min-width:1024px)"
+          />
+          <source
+            srcset="@/assets/home/tablet/image-earphones-yx1(2).jpg"
+            media="(min-width:768px)"
+          />
+          <source srcset="@/assets/home/mobile/image-earphones-yx1.jpg" />
+          <img src="@/assets/home/desktop/image-earphones-yx1.jpg" />
+        </picture>
         <div class="yx1-content">
           <div>
             <h4>yx1 earphones</h4>
@@ -63,11 +84,12 @@ export default {
   padding: 0 165px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, 1fr);
+  // grid-template-rows: 1fr 0.5fr 0.5fr;
   grid-template-rows: 560px 320px 320px;
   row-gap: 48px;
   column-gap: 30px;
-  margin-bottom: 200px;
+  max-width: 1110px;
+  margin: 0 auto 200px;
 
   #zx9-speaker {
     grid-column: 1 / 3;
@@ -81,6 +103,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     column-gap: 148px;
     overflow: hidden;
+    // height: 560px;
 
     img {
       max-height: 493px;
@@ -119,19 +142,33 @@ export default {
   #zx7-speaker {
     grid-row: 2;
     grid-column: 1 / 3;
-    background-image: url("@/assets/home/desktop/image-speaker-zx7.jpg");
-    background-size: 100%;
-    height: 320px;
-    border-radius: 8px;
+    display: grid;
+    grid-auto-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    // background-image: url("@/assets/home/desktop/image-speaker-zx7.jpg");
+    // background-size: 100%;
+    // height: 320px;
 
     .zx7-content {
       position: relative;
       top: 101px;
       left: 95px;
+      grid-row: 1;
+      grid-column: 1 / 2;
 
       h4 {
         text-transform: uppercase;
         margin-bottom: 32px;
+      }
+    }
+
+    picture {
+      grid-row: 1;
+      grid-column: 1 /3;
+      img {
+        width: 100%;
+        max-height: 320px;
+        border-radius: 8px;
       }
     }
   }
@@ -142,12 +179,14 @@ export default {
     display: flex;
     gap: 30px;
 
-    img {
+    picture {
       grid-column: 1 / 2;
-      border-radius: 8px;
-      width: 50%;
-    }
 
+      img {
+        border-radius: 8px;
+        // width: 50%;
+      }
+    }
     .yx1-content {
       grid-column: 2 / 3;
       background-color: #f1f1f1;
@@ -170,7 +209,8 @@ export default {
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (max-width: 1023px) {
+  /* and (min-width: 768px) */
   #product-banners {
     padding: 0 40px;
     grid-template-rows: 720px 320px 320px;
@@ -178,7 +218,99 @@ export default {
     #zx9-speaker {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 64px;
+      background-position: center -280px;
+      // height: 720px;
+
+      img {
+        top: unset;
+        left: unset;
+      }
+
+      .banner-content {
+        align-items: center;
+        h2,
+        p {
+          text-align: center;
+        }
+      }
+    }
+
+    #yx1-earphones {
+      picture {
+        width: 50%;
+
+        img {
+          width: 100%;
+          max-height: 320px;
+        }
+      }
+      .yx1-content {
+        div {
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: fit-content;
+        }
+      }
     }
   }
 }
+
+@media screen and (max-width: 415px) {
+  #product-banners {
+    margin-bottom: 120px;
+    padding: 0 24px;
+    grid-template-rows: 600px 320px 200px 200px;
+
+    #zx9-speaker {
+      background-size: 626px;
+      background-position: center -132px;
+      justify-content: unset;
+
+      .banner-content {
+        h2 {
+          font-size: 36px;
+        }
+      }
+
+      img {
+        top: 55px;
+      }
+    }
+
+    #yx1-earphones {
+      display: block;
+      gap: unset;
+      flex-direction: unset;
+      picture {
+        width: 100%;
+      }
+
+      .yx1-content {
+        margin-top: 24px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 376px) {
+  #product-banners {
+    #zx9-speaker {
+      background-size: 558px;
+    }
+  }
+}
+
+// @media screen and (max-width: 768px) {
+//   #yx1-earphones {
+//     .yx1-content {
+//       gap: 11px;
+//     }
+//   }
+// }
 </style>

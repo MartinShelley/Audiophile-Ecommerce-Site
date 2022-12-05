@@ -25,6 +25,7 @@
         helping you get the most out of personal audio. Come and visit our demo
         facility - we’re open 7 days a week.
       </p>
+      <p class="footer-copyright">Copyright 2021. All Rights Reserved</p>
       <div class="footer-social-icons">
         <svg
           class="icon-fb"
@@ -63,7 +64,6 @@
           />
         </svg>
       </div>
-      <p class="footer-copyright">Copyright 2021. All Rights Reserved</p>
     </div>
   </footer>
 </template>
@@ -84,7 +84,7 @@ footer {
   .footer-nav {
     display: flex;
     justify-content: space-between;
-    padding: 75px 0px 36px;
+    margin: 75px 0px 36px;
 
     ul {
       display: flex;
@@ -104,6 +104,10 @@ footer {
       a:hover {
         color: #d87d4a;
         cursor: pointer;
+      }
+
+      li {
+        list-style: none;
       }
     }
   }
@@ -138,6 +142,71 @@ footer {
     .footer-copyright {
       color: #fff;
       opacity: 0.5;
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  footer {
+    height: 400px;
+    padding: 0 40px;
+
+    .footer-nav {
+      display: block;
+      justify-content: unset;
+      margin: 40px 0 32px;
+
+      ul {
+        margin-top: 32px;
+      }
+    }
+
+    .footer-body {
+      display: block;
+      .body-copy {
+        margin-bottom: 80px;
+      }
+      .footer-social-icons {
+        float: right;
+      }
+      .footer-copyright {
+        display: inline;
+        width: fit-content;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  footer {
+    padding: 0;
+    height: unset;
+    margin-top: 120px;
+
+    .footer-line {
+      margin: 0 auto;
+    }
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 48px;
+
+      ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-top: 48px;
+      }
+    }
+
+    .footer-body {
+      row-gap: 48px;
+      padding: 0 46x;
+      text-align: center;
+      .body-copy {
+        margin-bottom: 48px;
+      }
     }
   }
 }

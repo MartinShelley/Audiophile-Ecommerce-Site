@@ -15,7 +15,7 @@ export default {
   },
   removeAllFromCart(state) {
     state.productsInCart = [];
-    state.quantity = 0;
+    state.cartQuantity = 0;
     state.cartTotal = 0;
   },
   toggleShowCart(state) {

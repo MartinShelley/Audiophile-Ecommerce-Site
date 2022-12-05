@@ -6,40 +6,96 @@
       >
     </div>
     <div class="checkout">
-      <form>
+      <form id="checkout-form" @submit.prevent="submitForm" novalidate>
         <h3>Checkout</h3>
         <p class="subtitle form-section-heading">Billing Details</p>
         <div class="billing-details form-section">
           <div class="form-item">
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" />
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="John Doe"
+              v-model.trim="name.val"
+              @blur="clearValidity('name')"
+            />
+            <p v-if="!this.name.isValid">Name must not be empty.</p>
           </div>
           <div class="form-item">
             <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="email@domain.com"
+              v-model.trim="email.val"
+              @blur="clearValidity('email')"
+            />
+            <p v-if="this.email.errorType === 'empty'">
+              Please enter an email address.
+            </p>
+            <p v-if="this.email.errorType === 'invalid'">
+              Please enter a valid email address.
+            </p>
           </div>
           <div class="form-item">
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" />
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="07123456789"
+              v-model.trim="phone.val"
+              @blur="clearValidity('phone')"
+            />
           </div>
         </div>
         <p class="subtitle form-section-heading">Shipping Info</p>
         <div class="shipping-info form-section">
           <div class="form-item address">
             <label for="address">Address</label>
-            <input type="text" id="address" name="address" />
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="1 Main Street"
+              v-model.trim="address.val"
+              @blur="clearValidity('address')"
+            />
           </div>
           <div class="form-item">
             <label for="postcode">Postcode</label>
-            <input type="text" id="postcode" name="postcode" />
+            <input
+              type="text"
+              id="postcode"
+              name="postcode"
+              placeholder="BD8 9NB"
+              v-model.trim="postcode.val"
+              @blur="clearValidity('postcode')"
+            />
           </div>
           <div class="form-item">
             <label for="city">City</label>
-            <input type="text" id="city" name="city" />
+            <input
+              type="text"
+              id="city"
+              name="city"
+              placeholder="London"
+              v-model="city.val"
+              @blur="clearValidity('city')"
+            />
           </div>
           <div class="form-item">
             <label for="country">Country</label>
-            <input type="text" id="country" name="country" />
+            <input
+              type="text"
+              id="country"
+              name="country"
+              placeholder="United Kingdom"
+              v-model="country.val"
+              @blur="clearValidity('country')"
+            />
           </div>
         </div>
         <p class="subtitle form-section-heading">Payment Details</p>
@@ -65,7 +121,7 @@
             />Cash on Delivery</label
           >
           <!-- </div> -->
-          <div id="selected-cash" v-if="cashOnDeliverySelected">
+          <div id="selected-cash" v-show="paymentMethod.val === 'cash'">
             <img src="../assets/checkout/icon-cash-on-delivery.svg" />
             <p>
               The ‘Cash on Delivery’ option enables you to pay in cash when our
@@ -114,28 +170,126 @@
           <p>Grand Total</p>
           <h6 id="grand-total-price">£{{ grandTotal }}</h6>
         </div>
-        <ButtonOne>Continue & Pay</ButtonOne>
+        <ButtonOne type="submit" form="checkout-form">Continue & Pay</ButtonOne>
       </aside>
     </div>
+    <OrderConfirmation
+      :grandTotal="grandTotal"
+      v-if="showConfirmationOverlay"
+    />
   </main>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import OrderConfirmation from "../components/OrderConfirmation/OrderConfirmation.vue";
 export default {
+  components: {
+    OrderConfirmation,
+  },
   data() {
     return {
-      cashOnDeliverySelected: false,
+      showConfirmationOverlay: false,
+      formIsValid: true,
+      name: {
+        val: "",
+        isValid: true,
+      },
+      email: {
+        val: "",
+        isValid: true,
+        errorType: "",
+      },
+      phone: {
+        val: "",
+        isValid: true,
+      },
+      address: {
+        val: "",
+        isValid: true,
+      },
+      postcode: {
+        val: "",
+        isValid: true,
+      },
+      city: {
+        val: "",
+        isValid: true,
+      },
+      country: {
+        val: "",
+        isValid: true,
+      },
+      paymentMethod: {
+        val: "",
+        isValid: true,
+      },
     };
   },
   methods: {
-    checkFormIsValid() {},
+    clearValidity(input) {
+      this[input].isValid = true;
+    },
+    checkFormIsValid() {
+      this.formIsValid = true;
+      if (this.name.val === "") {
+        this.name.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.email.val === "") {
+        console.log("empty email");
+        this.email.isValid = false;
+        this.email.errorType = "empty";
+        this.formIsValid = false;
+      }
+      if (!/^[^@]+@\w+(\.\w+)+\w$/.test(this.email.val)) {
+        console.log("invalid email");
+        this.email.isValid = false;
+        this.email.errorType = "invalid";
+        this.formIsValid = false;
+      }
+      if (this.phone.val === "") {
+        this.phone.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.address.val === "") {
+        this.address.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.postcode.val === "") {
+        this.postcode.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.city.val === "") {
+        this.city.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.country.val === "") {
+        this.country.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.paymentMethod.val === "") {
+        this.paymentMethod.isValid = false;
+        this.formIsValid = false;
+      }
+    },
+    submitForm() {
+      console.log("subitted form");
+      console.log(this.paymentMethod);
+      this.checkFormIsValid();
+
+      if (!this.formIsValid) {
+        return;
+      }
+
+      this.showConfirmationOverlay = true;
+    },
     togglePaymentMethod(paymentType) {
       console.log("togglePaymentMethod");
       if (paymentType === "cash") {
-        this.cashOnDeliverySelected = true;
+        this.paymentMethod.val = "cash";
       } else if (paymentType === "card") {
-        this.cashOnDeliverySelected = false;
+        this.paymentMethod.val = "card";
       }
     },
   },
@@ -311,6 +465,13 @@ main {
             appearance: none;
             padding: 5px;
             border-radius: 50%;
+          }
+
+          input:focus,
+          textarea:focus {
+            background-color: #f0e6fd;
+            outline: none;
+            border-color: #000;
           }
 
           input:checked {

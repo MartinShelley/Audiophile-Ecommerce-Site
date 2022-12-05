@@ -371,4 +371,24 @@ header {
     }
   }
 }
+
+@media screen and (max-width: 415px) {
+  header {
+    nav {
+      margin: 0 0 0 24px;
+      #navigation-icons {
+        gap: 100px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 376px) {
+  header {
+    nav {
+      #navigation-icons {
+        gap: 76px;
+      }
+    }
+  }
+}
 </style>
