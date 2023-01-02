@@ -2,13 +2,15 @@
   <main>
     <ProductCategoryHero :category="productCategory" />
     <section class="category-products">
-      <ProductCard
+      <CategoryProductCard
         v-for="product in categoryProducts"
         :key="product.id"
         :productName="product.name"
         :productDesc="product.description"
         :newProduct="product.new"
-        :productDesktopImage="product.image.desktop"
+        :productDesktopImage="product.categoryImage.desktop"
+        :productTabletImage="product.categoryImage.tablet"
+        :productMobileImage="product.categoryImage.mobile"
         :href="'/' + productCategory + '/' + product.slug"
       />
     </section>
@@ -39,6 +41,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.product-card {
+  //   display: flex;
+  //   align-items: center;
+  //   margin-bottom: 160px;
+  //   padding: 0 165px;
+  gap: 125px;
+}
+
 .product-card:nth-child(1) {
   margin-top: 160px;
 }
@@ -61,5 +71,42 @@ export default {
 
 .product-card:last-child {
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .product-card {
+    flex-direction: column;
+    gap: 52px;
+
+    // img {
+    //   max-width: 540px;
+    // }
+    .product-details {
+      max-width: 572px;
+    }
+  }
+  .product-card:last-child {
+    margin-bottom: 171.5px;
+  }
+
+  #product-categories-nav {
+    padding: unset !important;
+  }
+  .product-card:nth-child(even) {
+    flex-direction: column;
+  }
+  .product-card:nth-child(1) {
+    margin-top: 120px;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .category-products {
+    padding: 0 24px;
+  }
+
+  .product-card:nth-child(1) {
+    margin-top: 64px;
+  }
 }
 </style>

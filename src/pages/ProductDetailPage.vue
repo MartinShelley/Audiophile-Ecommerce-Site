@@ -6,12 +6,14 @@
       >
     </div>
     <section>
-      <ProductCard
+      <ProductDetailCard
         :key="activeProduct.id"
         :productName="activeProduct.name"
         :productDesc="activeProduct.description"
         :newProduct="activeProduct.new"
         :productDesktopImage="activeProduct.image.desktop"
+        :productTabletImage="activeProduct.image.tablet"
+        :productMobileImage="activeProduct.image.mobile"
         :productPriceString="activeProduct.price"
       />
     </section>
@@ -34,15 +36,39 @@
       <div>
         <img
           class="product-image-one"
-          :src="require(`@/${activeProduct.gallery.first.desktop}`)"
+          :srcset="
+            require(`@/${activeProduct.gallery.first.desktop}`) +
+            ' 445w, ' +
+            require(`@/${activeProduct.gallery.first.tablet}`) +
+            ' 277w, ' +
+            require(`@/${activeProduct.gallery.first.mobile}`) +
+            ' 327w '
+          "
+          sizes="(min-width:1024px) 445px, (min-width:768px) 277px, 327px"
         />
         <img
           class="product-image-two"
-          :src="require(`@/${activeProduct.gallery.second.desktop}`)"
+          :srcset="
+            require(`@/${activeProduct.gallery.second.desktop}`) +
+            ' 445w, ' +
+            require(`@/${activeProduct.gallery.second.tablet}`) +
+            ' 277w, ' +
+            require(`@/${activeProduct.gallery.second.mobile}`) +
+            ' 327w '
+          "
+          sizes="(min-width:1024px) 445px, (min-width:768px) 277px, 327px"
         />
         <img
           class="product-image-three"
-          :src="require(`@/${activeProduct.gallery.third.desktop}`)"
+          :srcset="
+            require(`@/${activeProduct.gallery.third.desktop}`) +
+            ' 635w, ' +
+            require(`@/${activeProduct.gallery.third.tablet}`) +
+            ' 395w, ' +
+            require(`@/${activeProduct.gallery.third.mobile}`) +
+            ' 327w '
+          "
+          sizes="(min-width:1024px) 635px, (min-width:768px) 395px, 327px"
         />
       </div>
     </section>
@@ -56,7 +82,18 @@
           v-for="product in activeProduct.others"
           :key="product.name"
         >
-          <img :src="require(`@/${product.image.desktop}`)" />
+          <picture>
+            <source
+              media="(min-width:1024px)"
+              :srcset="require(`@/${product.image.desktop}`)"
+            />
+            <source
+              media="(min-width:768px)"
+              :srcset="require(`@/${product.image.tablet}`)"
+            />
+            <source :srcset="require(`@/${product.image.mobile}`)" />
+            <img :src="require(`@/${product.image.desktop}`)" />
+          </picture>
           <h5>{{ product.name }}</h5>
           <ButtonOne :href="`/${product.category}/${product.slug}`" />
         </div>
@@ -69,12 +106,8 @@
 
 
 <script>
-import ProductCard from "@/components/Products/ProductCard.vue";
 import { mapGetters } from "vuex";
 export default {
-  components: {
-    ProductCard,
-  },
   computed: {
     ...mapGetters("products", {
       getAllProducts: "getAllProducts",
@@ -86,6 +119,7 @@ export default {
       const productName = this.productName;
       products[category].filter((product) => {
         if (product.slug === productName) {
+          console.log("found product");
           activeProduct = product;
         }
       });
@@ -118,27 +152,27 @@ export default {
   }
 }
 
+.product-card {
+  gap: 125px;
+}
 .product-description {
   display: grid;
   margin: 0 165px;
   grid-template-columns: 1fr 1fr;
-  column-gap: 125px;
+  gap: 125px;
 
+  h3 {
+    margin-bottom: 32px;
+    text-transform: uppercase;
+  }
   .product-features {
-    h3 {
-      margin-bottom: 32px;
-    }
-
     p {
       white-space: pre-line;
+      opacity: 0.5;
     }
   }
 
   .product-in-the-box {
-    h3 {
-      margin-bottom: 32px;
-    }
-
     li {
       list-style: none;
       margin-bottom: 8px;
@@ -162,8 +196,8 @@ export default {
 }
 
 .product-images {
+  margin: 160px 0;
   div {
-    margin: 160px 0;
     display: grid;
     grid-template-columns: 440px 635px;
     grid-template-rows: 1fr 1fr;
@@ -182,6 +216,10 @@ export default {
     .product-image-three {
       grid-row: 1 / 3;
       grid-column: 2 / 3;
+    }
+
+    img {
+      border-radius: 8px;
     }
   }
 }
@@ -206,10 +244,132 @@ export default {
       img {
         margin-bottom: 40px;
         max-width: 350px;
+        border-radius: 8px;
       }
       h5 {
         margin-bottom: 32px;
         text-transform: uppercase;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) and (min-width: 416px) {
+  main {
+    // position: relative;
+    // top: 90px;
+    .back-button-nav {
+      margin: 123px 0 24px 40px;
+    }
+    .product-card {
+      // padding: 0 24px;
+      gap: 69px;
+
+      img {
+        width: 564px;
+      }
+    }
+    .product-description {
+      display: flex;
+      flex-direction: column;
+      margin: 0 40px;
+      gap: 120px;
+      .product-in-the-box {
+        display: flex;
+        gap: 166px;
+      }
+    }
+
+    .product-images {
+      margin: 120px 40px;
+      div {
+        grid-template-columns: 1fr 1.5fr;
+        grid-template-rows: 174px 174px;
+        row-gap: 20px;
+        column-gap: 18px;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    .you-may-also-like-section {
+      margin-bottom: 172px;
+      h3 {
+        margin-bottom: 56px;
+      }
+      .you-may-also-like-products {
+        gap: 11px;
+
+        .you-may-also-like-product {
+          img {
+            max-width: 223px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .back-button-nav {
+    margin: 106px 0 24px 24px;
+  }
+
+  .product-description {
+    margin: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 88px;
+
+    h3 {
+      font-size: 24px;
+      letter-spacing: 0.86px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .product-images {
+    margin: 88px 24px 120px;
+    div {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr 1.5fr;
+      column-gap: unset;
+      // margin: 88px 0 120px;
+
+      img {
+        width: 100%;
+      }
+
+      // .product-image-one {
+      // }
+      // .product-image-two {
+      // }
+      .product-image-three {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+      }
+    }
+  }
+
+  .you-may-also-like-section {
+    margin: 0 24px 172px;
+    h3 {
+      font-size: 24px;
+      letter-spacing: 0.86px;
+      margin-bottom: 40px;
+    }
+    .you-may-also-like-products {
+      gap: 56px;
+      flex-direction: column;
+
+      .you-may-also-like-product {
+        img {
+          width: 100%;
+          max-width: unset;
+          margin-bottom: 32px;
+        }
       }
     }
   }

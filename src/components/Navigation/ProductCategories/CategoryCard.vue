@@ -1,25 +1,21 @@
 <template>
   <div
     class="categoryCard"
-    @click="$router.push('/' + productCategory)"
+    @click="$router.push('/' + productCategory), toggleMobileNavigation()"
     @mouseover="isCardHovering = true"
     @mouseleave="isCardHovering = false"
   >
-    <div class="categoryImg">
-      <!-- <picture>
-          <source
-            :srcset="desktopImgUrl"
-            media="(min-width: 1024px)"
-          />
-          <source
-            :srcset="tabletImgUrl"
-            media="(min-width: 768px)"
-          />
-          <source :srcset="mobileImgUrl" />
-          <img :src="desktopImgUrl" />
-        </picture> -->
-      <img :src="imgUrl" />
-    </div>
+    <!-- <div class="categoryImg"> -->
+    <picture>
+      <source :srcset="desktopImgUrl" media="(min-width: 1024px)" />
+      <source :srcset="tabletImgUrl" media="(min-width: 768px)" />
+      <source :srcset="mobileImgUrl" />
+      <img :src="desktopImgUrl" />
+      <!-- <img :src="tabletImgUrl" />
+        <img :src="mobileImgUrl" /> -->
+    </picture>
+    <!-- <img :src="desktopImgUrl" /> -->
+    <!-- </div> -->
     <div class="cardContent">
       <h6>{{ productCategory }}</h6>
       <ButtonThree :cardHover="isCardHovering" />
@@ -28,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import ButtonThree from "../../UI/Buttons/ButtonThree.vue";
 export default {
   props: {
@@ -42,9 +39,9 @@ export default {
     };
   },
   computed: {
-    imgUrl() {
-      return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
-    },
+    // imgUrl() {
+    //   return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
+    // },
     desktopImgUrl() {
       return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
     },
@@ -54,29 +51,42 @@ export default {
     mobileImgUrl() {
       return require(`@/assets/shared/mobile/image-category-thumbnail-${this.productCategory}.png`);
     },
+    ...mapGetters({
+      showMobileNav: "showMobileNav",
+    }),
+  },
+  methods: {
+    toggleMobileNavigation() {
+      if (this.showMobileNav === true) {
+        this.$store.commit("toggleMobileNavigation");
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .categoryCard {
+  background-color: #f1f1f1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
   width: 350px;
-  height: 284px;
+  height: 204px;
+  border-radius: 8px;
 
-  .categoryImg {
-    height: 30%;
-    z-index: 1;
+  // .categoryImg {
+  //   height: 30%;
+  //   z-index: 1;
 
-    img {
-      max-height: 215px;
-    }
-  }
+  // img {
+  //   max-height: 200px;
+  // }
+  // }
 
   .cardContent {
-    background-color: #f1f1f1;
+    // background-color: #f1f1f1;
     display: flex;
     height: 70%;
     width: 100%;
@@ -84,7 +94,6 @@ export default {
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 30px;
-    border-radius: 8px;
 
     h6 {
       margin-bottom: 15px;
@@ -103,7 +112,29 @@ export default {
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .categoryCard {
+    height: 165px;
     width: 223px;
+
+    .cardContent {
+      padding-bottom: 22px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .categoryCard {
+    width: 327px;
+    height: 165px;
+
+    .cardContent {
+      padding-bottom: 22px;
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .categoryCard {
+    width: 100%;
   }
 }
 </style>

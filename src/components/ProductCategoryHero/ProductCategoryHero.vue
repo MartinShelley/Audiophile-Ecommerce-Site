@@ -32,4 +32,26 @@ header {
     letter-spacing: 1.43px;
   }
 }
+
+@media screen and (max-width: 1023px) and (min-width: 415px) {
+  #category-hero {
+    min-height: unset;
+    padding: 195px 0 97px;
+  }
+}
+
+@media screen and (max-width: 415px) {
+  #category-hero {
+    min-height: unset;
+    padding: 122px 0 32px;
+
+    .hero-title {
+      h1 {
+        font-size: 28px;
+        line-height: 38.25px;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}
 </style>

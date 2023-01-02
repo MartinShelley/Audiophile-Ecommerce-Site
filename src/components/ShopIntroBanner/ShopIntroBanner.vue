@@ -28,11 +28,15 @@
 
 <style lang="scss" scoped>
 #shop-intro-banner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 0 165px;
-  column-gap: 125px;
+  // display: grid;
+  // grid-template-columns: 1fr 1fr;
+  //padding: 0 165px;
+  // column-gap: 125px;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  gap: 125px;
+  margin-bottom: 160px;
 
   .banner-content {
     display: flex;
@@ -63,9 +67,11 @@
     display: flex;
     flex-direction: column-reverse;
     padding: 0 40px;
+    margin-bottom: 120px;
+    gap: 63px;
 
     .banner-content {
-      margin-top: 63px;
+      // margin-top: 63px;
       text-align: center;
       max-width: 573px;
     }
@@ -78,6 +84,8 @@
 
 @media screen and (max-width: 480px) {
   #shop-intro-banner {
+    padding: 0 24px;
+    gap: 40px;
     .banner-content {
       max-width: 327px;
       h2 {

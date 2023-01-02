@@ -42,4 +42,8 @@ export default {
 .buttonTwo-inverted:hover {
   cursor: pointer;
 }
+
+.buttonTwo-inverted {
+  border: none;
+}
 </style>

@@ -1,5 +1,11 @@
 <template>
-  <header>
+  <header
+    :class="{
+      headerBlend:
+        this.$route.path == '/' && !this.showCart && !this.showMobileNav,
+    }"
+  >
+    <!-- <header> -->
     <nav>
       <div id="navigation-icons">
         <img
@@ -84,6 +90,11 @@
       </div>
     </div>
   </header>
+  <div
+    id="navigation-background"
+    v-show="showMobileNav"
+    @click="toggleMobileNavigation"
+  ></div>
 </template>
 
 <script>
@@ -96,7 +107,6 @@ export default {
   data() {
     return {
       fullWidth: "100%",
-      showMobileNav: false,
     };
   },
   methods: {
@@ -117,15 +127,16 @@ export default {
       });
     },
     toggleMobileNavigation() {
-      this.showMobileNav = !this.showMobileNav;
+      this.$store.commit("toggleMobileNavigation");
     },
   },
   computed: {
-    ...mapGetters("cart", {
-      getProductsInCart: "getProductsInCart",
-      cartQuantity: "cartQuantity",
-      cartTotalPrice: "cartTotalPrice",
-      showCart: "showCart",
+    ...mapGetters({
+      getProductsInCart: "cart/getProductsInCart",
+      cartQuantity: "cart/cartQuantity",
+      cartTotalPrice: "cart/cartTotalPrice",
+      showCart: "cart/showCart",
+      showMobileNav: "showMobileNav",
     }),
     cartTotal() {
       return this.cartTotalPrice
@@ -143,14 +154,17 @@ header {
   top: 0px;
   width: 100%;
   background-color: #141313;
-  z-index: 1;
+  z-index: 2;
+  mix-blend-mode: unset;
   nav {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     height: 97px;
-    margin: 0 165px;
+    // margin: 0 165px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 37px;
 
     #navigation-icons {
       a {
@@ -340,13 +354,20 @@ header {
     }
   }
 }
+
+.headerBlend {
+  mix-blend-mode: lighten;
+}
+
 @media screen and (max-width: 1023px) {
   header {
     position: absolute;
-    background-color: unset;
+    // background-color: unset;
     nav {
       height: 89px;
       margin: 0 40px;
+      justify-content: space-between;
+      gap: unset;
       #navigation-icons {
         display: flex;
         align-items: center;
@@ -367,6 +388,34 @@ header {
         left: 0;
         background-color: #fafafa;
         z-index: 5;
+        padding: 56px 0 67px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+    }
+    .cart {
+      .cart-body {
+        top: 114px;
+      }
+    }
+  }
+  #navigation-background {
+    background-color: black;
+    opacity: 0.4;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+}
+
+@media screen and (max-width: 1023px) and (min-width: 415px) {
+  header {
+    .cart {
+      .cart-body {
+        right: 40px;
       }
     }
   }
@@ -379,6 +428,38 @@ header {
       #navigation-icons {
         gap: 100px;
       }
+      #mobile-navigation {
+        padding: 84px 0 24px;
+      }
+    }
+
+    .cart {
+      .cart-body {
+        right: unset;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 31px 28px;
+        width: calc(100% - 100px);
+
+        .cart-content {
+          ul {
+            li {
+              .cart-quantity {
+                width: 96px;
+
+                input {
+                  text-align: center;
+                }
+              }
+            }
+          }
+        }
+
+        h6 {
+          font-size: 15px;
+          line-height: 25px;
+        }
+      }
     }
   }
 }
@@ -387,6 +468,15 @@ header {
     nav {
       #navigation-icons {
         gap: 76px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 325px) {
+  header {
+    nav {
+      #navigation-icons {
+        gap: 45px;
       }
     }
   }

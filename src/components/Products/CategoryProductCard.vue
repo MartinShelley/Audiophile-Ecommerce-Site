@@ -1,6 +1,17 @@
 <template>
   <div class="product-card">
-    <img :src="require(`../../${productDesktopImage}`)" />
+    <picture>
+      <source
+        :srcset="require(`@/${productDesktopImage}`)"
+        media="(min-width:1024px)"
+      />
+      <source
+        :srcset="require(`@/${productTabletImage}`)"
+        media="(min-width:768px)"
+      />
+      <source :srcset="require(`@/${productMobileImage}`)" />
+      <img :src="require(`@/${productDesktopImage}`)" />
+    </picture>
     <div class="product-details">
       <p class="new-product overline" v-if="newProduct">New Product</p>
       <h2>{{ productName }}</h2>
@@ -41,6 +52,8 @@ export default {
     productDesc: String,
     newProduct: Boolean,
     productDesktopImage: String,
+    productTabletImage: String,
+    productMobileImage: String,
     href: String,
     productPriceString: Number,
   },
@@ -111,12 +124,13 @@ export default {
   align-items: center;
   margin-bottom: 160px;
   padding: 0 165px;
-  gap: 125px;
+  // gap: 125px;
 
-  img {
-    max-width: 540px;
+  picture {
+    img {
+      max-width: 540px;
+    }
   }
-
   .product-details {
     max-width: 445px;
 
@@ -127,11 +141,11 @@ export default {
     h2 {
       margin-bottom: 32px;
       text-transform: uppercase;
-      padding-right: 45px;
     }
 
     .product-desc {
       margin-bottom: 40px;
+      opacity: 0.5;
     }
 
     button {
@@ -188,6 +202,63 @@ export default {
           margin-left: 16px;
           opacity: 0.5;
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .product-card {
+    margin-bottom: 120px;
+    padding: 0 40px;
+
+    picture {
+      img {
+        width: 100%;
+        max-width: unset;
+      }
+    }
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      max-width: 572px;
+      align-items: center;
+
+      h2 {
+        max-width: 300px;
+        text-align: center;
+      }
+
+      .product-desc {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  .product-card {
+    padding: unset;
+    gap: 32px;
+    // img {
+    //   width: 100%;
+    //   max-width: unset;
+    // }
+    .product-details {
+      .new-product {
+        margin-bottom: 24px;
+      }
+
+      h2 {
+        font-size: 28px;
+        line-height: 38.25px;
+        letter-spacing: 1px;
+        margin-bottom: 24px;
+        max-width: 275px;
+      }
+
+      .product-desc {
+        margin-bottom: 24px;
       }
     }
   }

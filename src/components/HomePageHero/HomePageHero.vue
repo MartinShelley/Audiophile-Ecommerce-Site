@@ -32,9 +32,11 @@
 <style lang="scss" scoped>
 section {
   display: flex;
-  padding: 0 165px;
+  //padding: 0 165px;
   background-color: #141313;
   min-height: 729px;
+  justify-content: center;
+  margin-bottom: 200px;
   .hero-text {
     color: #fff;
     max-width: 398px;
@@ -72,6 +74,7 @@ section {
   section {
     padding: 0;
     justify-content: center;
+    margin-bottom: 140px;
 
     .hero-text {
       display: flex;
@@ -107,6 +110,7 @@ section {
   section {
     padding: 0;
     min-height: unset;
+    margin-bottom: 120px;
 
     .hero-text {
       max-width: 328px;

@@ -212,6 +212,7 @@ export default {
 @media screen and (max-width: 1023px) {
   /* and (min-width: 768px) */
   #product-banners {
+    margin-bottom: 96px;
     padding: 0 40px;
     grid-template-rows: 720px 320px 320px;
 
@@ -235,6 +236,12 @@ export default {
         p {
           text-align: center;
         }
+      }
+    }
+
+    #zx7-speaker {
+      .zx7-content {
+        left: 62px;
       }
     }
 
@@ -271,7 +278,10 @@ export default {
       justify-content: unset;
 
       .banner-content {
+        max-width: 280px;
+        padding: 24px;
         h2 {
+          line-height: 40px;
           font-size: 36px;
         }
       }
@@ -295,6 +305,13 @@ export default {
         height: 100%;
       }
     }
+
+    #zx7-speaker {
+      .zx7-content {
+        left: 24px;
+        min-width: 204px;
+      }
+    }
   }
 }
 
@@ -302,6 +319,22 @@ export default {
   #product-banners {
     #zx9-speaker {
       background-size: 558px;
+    }
+  }
+}
+
+@media screen and (max-width: 340px) {
+  #product-banners {
+    #zx7-speaker {
+      .zx7-content {
+        top: 70px;
+        left: 24px;
+        min-width: 204px;
+
+        h4 {
+          font-size: 23px;
+        }
+      }
     }
   }
 }

@@ -1,27 +1,54 @@
 <template>
-  <body>
-    <MainNav />
-    <transition name="route" mode="out-in">
-      <router-view />
+  <MainNav />
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <!-- <transition name="fade" mode="out-in"> -->
+      <component :is="Component" :key="this.$route.path" />
     </transition>
-    <TheFooter />
-  </body>
+  </router-view>
+  <TheFooter />
 </template>
 
 
 <script>
 import MainNav from "./components/Navigation/MainNavigation.vue";
 import TheFooter from "./components/Footer/TheFooter.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     MainNav,
     TheFooter,
   },
+  computed: {
+    ...mapGetters({
+      showCart: "cart/showCart",
+      showMobileNav: "showMobileNav",
+    }),
+    toggleScrolling() {
+      if (this.showCart) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   created() {
     this.$store.dispatch("products/getProductDetails");
   },
   beforeMount() {
-    if (localStorage.getItem("productsInCart")) {
+    const timeNow = new Date();
+    const cartExpiry = localStorage.getItem("cartExpiry");
+    //if cart time has expired reset cart
+    if (cartExpiry < timeNow.getTime()) {
+      console.log("no cartExpiry or cart expired");
+      this.$store.dispatch("cart/removeAllFromCart");
+      localStorage.setItem("cartExpiry", null);
+    }
+    //if there are products in cart and cart hasn't expired
+    else if (
+      localStorage.getItem("productsInCart") &&
+      cartExpiry > timeNow.getTime()
+    ) {
       const getPreviouslyAddedProducts = JSON.parse(
         localStorage.productsInCart
       );
@@ -38,7 +65,14 @@ export default {
       this.$store.commit("cart/updateCartQuantity", {
         quantity: cartQuantity,
       });
+      //update 30 minute cart expiry
+      localStorage.setItem("cartExpiry", timeNow.getTime() + 1800000);
     }
+  },
+  watch: {
+    toggleScrolling(toggleScrolling) {
+      document.body.style.overflow = toggleScrolling ? "hidden" : "";
+    },
   },
 };
 </script>
@@ -138,27 +172,40 @@ p {
   cursor: pointer;
 }
 
-.route-enter-from {
+.popUpOpen {
+  overflow-y: hidden;
+}
+
+// .route-enter-from {
+//   opacity: 0;
+//   transform: translateY(-30px);
+// }
+
+// .route-leave-to {
+//   opacity: 0;
+//   transform: translateY(30px);
+// }
+
+// .route-enter-active {
+//   transition: all 0.7s ease-out;
+// }
+
+// .route-leave-active {
+//   transition: all 0.7s ease-in;
+// }
+
+// .route-enter-to,
+// .route-leave-from {
+//   opacity: 1;
+//   transform: translateY(0px);
+// }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
-}
-
-.route-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.route-enter-active {
-  transition: all 0.7s ease-out;
-}
-
-.route-leave-active {
-  transition: all 0.7s ease-in;
-}
-
-.route-enter-to,
-.route-leave-from {
-  opacity: 1;
-  transform: translateY(0px);
 }
 </style>

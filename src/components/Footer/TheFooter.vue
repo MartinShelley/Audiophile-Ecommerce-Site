@@ -70,7 +70,7 @@
 
 <style lang="scss" scoped>
 footer {
-  margin-top: 200px;
+  // margin-top: 200px;
   background-color: #101010;
   height: 365px;
   padding: 0 165px;
@@ -113,7 +113,7 @@ footer {
   }
   .footer-body {
     display: grid;
-    grid-template-columns: 46% 54%;
+    grid-template-columns: 540px auto;
     grid-template-rows: 1fr auto;
     row-gap: 56px;
     // padding: 0 165px;
@@ -142,6 +142,7 @@ footer {
     .footer-copyright {
       color: #fff;
       opacity: 0.5;
+      grid-row: 2 / 3;
     }
   }
 }
@@ -162,17 +163,18 @@ footer {
     }
 
     .footer-body {
-      display: block;
+      // display: block;
+      row-gap: unset;
       .body-copy {
         margin-bottom: 80px;
       }
       .footer-social-icons {
-        float: right;
+        grid-row: 2;
       }
-      .footer-copyright {
-        display: inline;
-        width: fit-content;
-      }
+      // .footer-copyright {
+      //   display: inline;
+      //   width: fit-content;
+      // }
     }
   }
 }
@@ -181,7 +183,7 @@ footer {
   footer {
     padding: 0;
     height: unset;
-    margin-top: 120px;
+    // margin-top: 120px;
 
     .footer-line {
       margin: 0 auto;
@@ -201,11 +203,22 @@ footer {
     }
 
     .footer-body {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr auto auto;
       row-gap: 48px;
       padding: 0 46x;
       text-align: center;
       .body-copy {
-        margin-bottom: 48px;
+        padding: 0 24px;
+        margin-bottom: 0px;
+      }
+      // .footer-copyright {
+      //   margin-bottom: 0px;
+      // }
+      .footer-social-icons {
+        justify-content: center;
+        padding-bottom: 38px;
+        grid-row: 3;
       }
     }
   }

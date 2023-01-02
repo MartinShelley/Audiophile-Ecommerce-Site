@@ -20,7 +20,9 @@
               v-model.trim="name.val"
               @blur="clearValidity('name')"
             />
-            <p v-if="!this.name.isValid">Name must not be empty.</p>
+            <p class="error-message" v-if="!this.name.isValid">
+              Name must not be empty.
+            </p>
           </div>
           <div class="form-item">
             <label for="email">Email Address</label>
@@ -32,10 +34,16 @@
               v-model.trim="email.val"
               @blur="clearValidity('email')"
             />
-            <p v-if="this.email.errorType === 'empty'">
+            <p
+              class="error-message"
+              v-if="this.email.errorType === 'empty' && !this.email.isValid"
+            >
               Please enter an email address.
             </p>
-            <p v-if="this.email.errorType === 'invalid'">
+            <p
+              class="error-message"
+              v-if="this.email.errorType === 'invalid' && !this.email.isValid"
+            >
               Please enter a valid email address.
             </p>
           </div>
@@ -49,6 +57,9 @@
               v-model.trim="phone.val"
               @blur="clearValidity('phone')"
             />
+            <p class="error-message" v-if="!this.phone.isValid">
+              Phone must be valid.
+            </p>
           </div>
         </div>
         <p class="subtitle form-section-heading">Shipping Info</p>
@@ -63,6 +74,9 @@
               v-model.trim="address.val"
               @blur="clearValidity('address')"
             />
+            <p class="error-message" v-if="!this.address.isValid">
+              Address must not be empty.
+            </p>
           </div>
           <div class="form-item">
             <label for="postcode">Postcode</label>
@@ -74,6 +88,9 @@
               v-model.trim="postcode.val"
               @blur="clearValidity('postcode')"
             />
+            <p class="error-message" v-if="!this.postcode.isValid">
+              Postcode must be valid.
+            </p>
           </div>
           <div class="form-item">
             <label for="city">City</label>
@@ -85,6 +102,9 @@
               v-model="city.val"
               @blur="clearValidity('city')"
             />
+            <p class="error-message" v-if="!this.city.isValid">
+              City must be valid.
+            </p>
           </div>
           <div class="form-item">
             <label for="country">Country</label>
@@ -96,6 +116,9 @@
               v-model="country.val"
               @blur="clearValidity('country')"
             />
+            <p class="error-message" v-if="!this.country.isValid">
+              Name must not be empty.
+            </p>
           </div>
         </div>
         <p class="subtitle form-section-heading">Payment Details</p>
@@ -107,7 +130,11 @@
               type="radio"
               name="paymentMethod"
               value="credit/debit card"
-              @click="togglePaymentMethod('card')"
+              @click="
+                togglePaymentMethod('card');
+                clearValidity('paymentMethod');
+              "
+              @blur="clearValidity('paymentMethod')"
             />Credit/Debit Card</label
           >
           <!-- </div> -->
@@ -117,9 +144,19 @@
               type="radio"
               name="paymentMethod"
               value="cash"
-              @click="togglePaymentMethod('cash')"
+              @click="
+                togglePaymentMethod('cash');
+                clearValidity('paymentMethod');
+              "
+              @blur="clearValidity('paymentMethod')"
             />Cash on Delivery</label
           >
+          <p
+            class="error-message payment-error"
+            v-if="!this.paymentMethod.isValid"
+          >
+            A Payment Method must be selected
+          </p>
           <!-- </div> -->
           <div id="selected-cash" v-show="paymentMethod.val === 'cash'">
             <img src="../assets/checkout/icon-cash-on-delivery.svg" />
@@ -498,6 +535,15 @@ main {
           }
         }
       }
+      .error-message {
+        font-size: 12px;
+        color: #ff0000;
+        opacity: 0.8;
+      }
+
+      .payment-error {
+        grid-column: 2 / 3;
+      }
     }
     aside {
       background-color: #fff;
@@ -587,6 +633,67 @@ main {
       }
       button {
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  main {
+    .checkout {
+      grid-template-columns: 1fr;
+      column-gap: unset;
+      row-gap: 32px;
+
+      aside {
+        ul {
+          li {
+            .product {
+              grid-template-columns: 0.2fr 2fr;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) and (min-width: 416px) {
+  main {
+    padding: 0 40px 116px;
+
+    .back-button-nav {
+      padding: 138px 0 24px;
+    }
+
+    // .checkout {
+    //   grid-template-columns: 1fr;
+    // }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  main {
+    padding: 0 24px 97px;
+
+    .back-button-nav {
+      padding: 106px 0 24px;
+    }
+
+    .checkout {
+      form {
+        .form-section,
+        .payment-section {
+          display: flex;
+          flex-direction: column;
+          column-gap: unset;
+        }
+
+        .payment-section {
+          label:nth-child(1) {
+            margin-bottom: 17px;
+          }
+        }
       }
     }
   }
