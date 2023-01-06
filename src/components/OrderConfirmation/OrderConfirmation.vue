@@ -16,6 +16,9 @@
         Thank you
         <pre>for your order</pre>
       </h3>
+      <p id="email-confirmation-note">
+        You will receive an email confirmation shortly.
+      </p>
       <div id="order-info">
         <div id="order-products">
           <div id="order-product-details">
@@ -65,6 +68,20 @@ export default {
     removeAllProducts() {
       this.$store.dispatch("cart/removeAllFromCart");
     },
+    removeOverflow() {
+      document.querySelector("body").style.overflowY = "";
+    },
+  },
+  mounted() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    document.querySelector("body").style.overflowY = "hidden";
+  },
+  unmounted() {
+    document.querySelector("body").style.overflowY = "";
   },
 };
 </script>
@@ -79,26 +96,33 @@ export default {
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: 2;
   }
 
   #order-confirmation-content {
     background-color: #fff;
     border-radius: 8px;
-    z-index: 2;
+    z-index: 3;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 48px;
+    min-width: 444px;
 
     h3 {
-      margin: 33px 0 82px;
+      margin: 33px 0 24px;
       text-transform: uppercase;
+    }
+
+    #email-confirmation-note {
+      opacity: 0.5;
+      margin-bottom: 33px;
     }
 
     #order-info {
       display: flex;
-      max-height: 140px;
+      // max-height: 140px;
       margin-bottom: 46px;
 
       #order-products {
@@ -109,7 +133,7 @@ export default {
 
         #order-product-details {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1.5fr 1fr;
           border-bottom: 1px solid rgba(0, 0, 0, 0.08);
           padding-bottom: 12px;
           img {
@@ -170,6 +194,42 @@ export default {
 
     .buttonOne {
       width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 415px) {
+  #order-confirmation {
+    #order-confirmation-content {
+      // max-width: calc(100% - 48px);
+      min-width: 263px;
+      padding: 32px;
+
+      h3 {
+        font-size: 24px;
+        line-height: 28px;
+        letter-spacing: 0.86px;
+        margin: 23px 0 16px;
+      }
+
+      #email-confirmation-note {
+        margin-bottom: 24px;
+      }
+
+      #order-info {
+        flex-direction: column;
+        margin-bottom: 23px;
+
+        #order-products {
+          border-bottom-left-radius: unset;
+          border-top-right-radius: 8px;
+        }
+
+        #order-grand-total {
+          border-top-right-radius: unset;
+          border-bottom-left-radius: 8px;
+        }
+      }
     }
   }
 }
