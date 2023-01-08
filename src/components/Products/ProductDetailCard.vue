@@ -286,6 +286,9 @@ export default {
 }
 
 @media screen and (max-width: 415px) {
+  .back-button-nav {
+    margin: 16px 0 0px 24px;
+  }
   .product-card {
     flex-direction: column;
     padding: 0 24px;

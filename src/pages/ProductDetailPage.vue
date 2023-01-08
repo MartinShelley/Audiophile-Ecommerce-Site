@@ -243,14 +243,18 @@ export default {
   }
 }
 
-@media screen and (max-width: 1023px) and (min-width: 416px) {
+@media screen and (max-width: 1023px) {
   main {
     position: relative;
     top: 90px;
+    margin-bottom: 200px;
 
     .product-detail-section {
       margin: unset;
     }
+  }
+
+  @media screen and (max-width: 1023px) and (min-width: 416px) {
     .product-card {
       img {
         width: 564px;

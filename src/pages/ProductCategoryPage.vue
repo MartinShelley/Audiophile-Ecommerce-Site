@@ -54,10 +54,6 @@ export default {
 }
 
 #shop-intro-banner {
-  margin-top: 0;
-}
-
-#shop-intro-banner {
   margin-top: 160px;
 }
 
