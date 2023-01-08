@@ -5,17 +5,12 @@
     @mouseover="isCardHovering = true"
     @mouseleave="isCardHovering = false"
   >
-    <!-- <div class="categoryImg"> -->
     <picture>
       <source :srcset="desktopImgUrl" media="(min-width: 1024px)" />
       <source :srcset="tabletImgUrl" media="(min-width: 768px)" />
       <source :srcset="mobileImgUrl" />
-      <img :src="desktopImgUrl" />
-      <!-- <img :src="tabletImgUrl" />
-        <img :src="mobileImgUrl" /> -->
+      <img :src="desktopImgUrl" :alt="`${productCategory}` + 'Category'" />
     </picture>
-    <!-- <img :src="desktopImgUrl" /> -->
-    <!-- </div> -->
     <div class="cardContent">
       <h6>{{ productCategory }}</h6>
       <ButtonThree :cardHover="isCardHovering" />
@@ -39,9 +34,6 @@ export default {
     };
   },
   computed: {
-    // imgUrl() {
-    //   return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
-    // },
     desktopImgUrl() {
       return require(`@/assets/shared/desktop/image-category-thumbnail-${this.productCategory}.png`);
     },
@@ -76,17 +68,7 @@ export default {
   height: 204px;
   border-radius: 8px;
 
-  // .categoryImg {
-  //   height: 30%;
-  //   z-index: 1;
-
-  // img {
-  //   max-height: 200px;
-  // }
-  // }
-
   .cardContent {
-    // background-color: #f1f1f1;
     display: flex;
     height: 70%;
     width: 100%;

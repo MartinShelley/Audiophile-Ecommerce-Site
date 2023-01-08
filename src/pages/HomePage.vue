@@ -14,7 +14,10 @@
             media="(min-width:768px)"
           />
           <source srcset="@/assets/home/mobile/image-speaker-zx9(2).png" />
-          <img src="@/assets/home/desktop/zx9-speaker-image(2).png" />
+          <img
+            src="@/assets/home/desktop/zx9-speaker-image(2).png"
+            alt="ZX9 Speaker Banner"
+          />
         </picture>
         <div class="banner-content">
           <h2>zx9 speaker</h2>
@@ -40,7 +43,10 @@
             media="(min-width:768px)"
           />
           <source srcset="@/assets/home/mobile/image-speaker-zx7.jpg" />
-          <img src="@/assets/home/desktop/image-speaker-zx7.jpg" />
+          <img
+            src="@/assets/home/desktop/image-speaker-zx7.jpg"
+            alt="ZX7 Speaker Banner"
+          />
         </picture>
       </div>
       <div id="yx1-earphones">
@@ -54,7 +60,10 @@
             media="(min-width:768px)"
           />
           <source srcset="@/assets/home/mobile/image-earphones-yx1.jpg" />
-          <img src="@/assets/home/desktop/image-earphones-yx1.jpg" />
+          <img
+            src="@/assets/home/desktop/image-earphones-yx1.jpg"
+            alt="YX1 Earphones Banner"
+          />
         </picture>
         <div class="yx1-content">
           <div>
@@ -84,7 +93,6 @@ export default {
   padding: 0 165px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  // grid-template-rows: 1fr 0.5fr 0.5fr;
   grid-template-rows: 560px 320px 320px;
   row-gap: 48px;
   column-gap: 30px;
@@ -103,7 +111,6 @@ export default {
     grid-template-columns: 1fr 1fr;
     column-gap: 148px;
     overflow: hidden;
-    // height: 560px;
 
     img {
       max-height: 493px;
@@ -145,9 +152,6 @@ export default {
     display: grid;
     grid-auto-columns: 1fr 1fr;
     grid-auto-rows: 1fr;
-    // background-image: url("@/assets/home/desktop/image-speaker-zx7.jpg");
-    // background-size: 100%;
-    // height: 320px;
 
     .zx7-content {
       position: relative;
@@ -184,7 +188,6 @@ export default {
 
       img {
         border-radius: 8px;
-        // width: 50%;
       }
     }
     .yx1-content {
@@ -210,7 +213,6 @@ export default {
 }
 
 @media screen and (max-width: 1023px) {
-  /* and (min-width: 768px) */
   #product-banners {
     margin-bottom: 96px;
     padding: 0 40px;
@@ -223,7 +225,6 @@ export default {
       justify-content: center;
       gap: 64px;
       background-position: center -280px;
-      // height: 720px;
 
       img {
         top: unset;
@@ -338,12 +339,4 @@ export default {
     }
   }
 }
-
-// @media screen and (max-width: 768px) {
-//   #yx1-earphones {
-//     .yx1-content {
-//       gap: 11px;
-//     }
-//   }
-// }
 </style>

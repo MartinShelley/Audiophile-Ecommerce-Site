@@ -42,10 +42,6 @@ export default {
 
 <style lang="scss" scoped>
 .product-card {
-  //   display: flex;
-  //   align-items: center;
-  //   margin-bottom: 160px;
-  //   padding: 0 165px;
   gap: 125px;
 }
 
@@ -78,9 +74,6 @@ export default {
     flex-direction: column;
     gap: 52px;
 
-    // img {
-    //   max-width: 540px;
-    // }
     .product-details {
       max-width: 572px;
     }
@@ -104,7 +97,6 @@ export default {
   .category-products {
     padding: 0 24px;
   }
-
   .product-card:nth-child(1) {
     margin-top: 64px;
   }

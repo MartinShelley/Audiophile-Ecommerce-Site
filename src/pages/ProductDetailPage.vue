@@ -1,11 +1,6 @@
 <template>
   <main>
-    <div class="back-button-nav">
-      <router-link @click="$router.back()" to="" class="back-button"
-        >Go Back</router-link
-      >
-    </div>
-    <section>
+    <section class="product-detail-section">
       <ProductDetailCard
         :key="activeProduct.id"
         :productName="activeProduct.name"
@@ -45,6 +40,7 @@
             ' 327w '
           "
           sizes="(min-width:1024px) 445px, (min-width:768px) 277px, 327px"
+          :alt="`${activeProduct.name} Image 1`"
         />
         <img
           class="product-image-two"
@@ -57,6 +53,7 @@
             ' 327w '
           "
           sizes="(min-width:1024px) 445px, (min-width:768px) 277px, 327px"
+          :alt="`${activeProduct.name} Image 2`"
         />
         <img
           class="product-image-three"
@@ -69,6 +66,7 @@
             ' 327w '
           "
           sizes="(min-width:1024px) 635px, (min-width:768px) 395px, 327px"
+          :alt="`${activeProduct.name} Image 3`"
         />
       </div>
     </section>
@@ -92,7 +90,10 @@
               :srcset="require(`@/${product.image.tablet}`)"
             />
             <source :srcset="require(`@/${product.image.mobile}`)" />
-            <img :src="require(`@/${product.image.desktop}`)" />
+            <img
+              :src="require(`@/${product.image.desktop}`)"
+              :alt="`${product.name}`"
+            />
           </picture>
           <h5>{{ product.name }}</h5>
           <ButtonOne :href="`/${product.category}/${product.slug}`" />
@@ -137,35 +138,21 @@ export default {
 
 
 <style lang="scss" scoped>
-.back-button-nav {
-  margin: 79px 0 56px 165px;
-
-  .back-button {
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 25px;
-    letter-spacing: 0px;
-    color: #000;
-    opacity: 0.5;
-    margin-top: 79px;
-  }
-}
-
-.product-card {
-  gap: 125px;
+.product-detail-section {
+  max-width: 1110px;
+  margin: 79px auto 160px;
 }
 .product-description {
-  display: grid;
-  margin: 0 165px;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
   gap: 125px;
+  justify-content: center;
 
   h3 {
     margin-bottom: 32px;
     text-transform: uppercase;
   }
   .product-features {
+    max-width: 635px;
     p {
       white-space: pre-line;
       opacity: 0.5;
@@ -173,6 +160,7 @@ export default {
   }
 
   .product-in-the-box {
+    min-width: 350px;
     li {
       list-style: none;
       margin-bottom: 8px;
@@ -225,6 +213,7 @@ export default {
 }
 
 .you-may-also-like-section {
+  margin-bottom: 240px;
   h3 {
     text-align: center;
     text-transform: uppercase;
@@ -256,15 +245,13 @@ export default {
 
 @media screen and (max-width: 1023px) and (min-width: 416px) {
   main {
-    // position: relative;
-    // top: 90px;
-    .back-button-nav {
-      margin: 123px 0 24px 40px;
+    position: relative;
+    top: 90px;
+
+    .product-detail-section {
+      margin: unset;
     }
     .product-card {
-      // padding: 0 24px;
-      gap: 69px;
-
       img {
         width: 564px;
       }
@@ -274,6 +261,10 @@ export default {
       flex-direction: column;
       margin: 0 40px;
       gap: 120px;
+
+      .product-features {
+        max-width: unset;
+      }
       .product-in-the-box {
         display: flex;
         gap: 166px;
@@ -336,16 +327,10 @@ export default {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 1fr 1.5fr;
       column-gap: unset;
-      // margin: 88px 0 120px;
 
       img {
         width: 100%;
       }
-
-      // .product-image-one {
-      // }
-      // .product-image-two {
-      // }
       .product-image-three {
         grid-column: 1 / 2;
         grid-row: 3 / 4;

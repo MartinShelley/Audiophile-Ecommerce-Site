@@ -22,7 +22,10 @@
       <div id="order-info">
         <div id="order-products">
           <div id="order-product-details">
-            <img :src="require(`@/${getProductsInCart[0].cartImage}`)" />
+            <img
+              :src="require(`@/${getProductsInCart[0].cartImage}`)"
+              :alt="`${getProductsInCart[0].productName}`"
+            />
             <p id="order-product-name">{{ getProductsInCart[0].shortName }}</p>
             <p id="order-product-quantity">
               x{{ getProductsInCart[0].quantity }}
@@ -122,7 +125,6 @@ export default {
 
     #order-info {
       display: flex;
-      // max-height: 140px;
       margin-bottom: 46px;
 
       #order-products {
@@ -201,7 +203,6 @@ export default {
 @media screen and (max-width: 415px) {
   #order-confirmation {
     #order-confirmation-content {
-      // max-width: calc(100% - 48px);
       min-width: 263px;
       padding: 32px;
 
@@ -228,7 +229,32 @@ export default {
         #order-grand-total {
           border-top-right-radius: unset;
           border-bottom-left-radius: 8px;
+          padding: 15px 105px 19px 24px;
+
+          .title {
+            margin-bottom: 8px;
+          }
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  #order-confirmation {
+    #order-confirmation-content {
+      min-width: 250px;
+      padding: 24px;
+
+      h3 {
+        font-size: 21px;
+        line-height: 24px;
+        margin: 16px 0 8px;
+      }
+
+      #email-confirmation-note {
+        line-height: 22px;
+        margin-bottom: 14px;
       }
     }
   }

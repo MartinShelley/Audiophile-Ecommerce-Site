@@ -50,7 +50,6 @@ export default {
   #product-categories-nav {
     flex-direction: column;
     align-items: center;
-    // margin: 40px auto 120px;
     margin: 40px 24px 120px;
     gap: 84px;
     width: unset;

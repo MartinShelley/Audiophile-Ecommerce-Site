@@ -1,44 +1,62 @@
 <template>
-  <div class="product-card">
-    <picture>
-      <source
-        :srcset="require(`@/${productDesktopImage}`)"
-        media="(min-width:1024px)"
-      />
-      <source
-        :srcset="require(`@/${productTabletImage}`)"
-        media="(min-width:768px)"
-      />
-      <source :srcset="require(`@/${productMobileImage}`)" />
-      <img :src="require(`@/${productDesktopImage}`)" />
-    </picture>
-    <div class="product-details">
-      <p class="new-product overline" v-if="newProduct">New Product</p>
-      <h2>{{ productName }}</h2>
-      <p class="product-desc" style="white-space: pre-line">
-        {{ productDesc }}
-      </p>
-      <ButtonOne :href="href" v-if="pageType === 'productCategory'" />
-      <div class="product-add-to-cart" v-else-if="pageType === 'productDetail'">
-        <p class="product-price">£{{ productPrice }}</p>
-        <div class="add-to-cart-form">
-          <div class="product-quantity">
-            <span @click="decreaseQuantity">-</span>
-            <input type="number" :value="this.quantity" id="quantity" min="1" />
-            <span @click="increaseQuantity">+</span>
+  <div class="product-card-container">
+    <div class="back-button-nav">
+      <router-link @click="$router.back()" to="" class="back-button"
+        >Go Back</router-link
+      >
+    </div>
+    <div class="product-card">
+      <picture>
+        <source
+          :srcset="require(`@/${productDesktopImage}`)"
+          media="(min-width:1024px)"
+        />
+        <source
+          :srcset="require(`@/${productTabletImage}`)"
+          media="(min-width:768px)"
+        />
+        <source :srcset="require(`@/${productMobileImage}`)" />
+        <img
+          :src="require(`@/${productDesktopImage}`)"
+          :alt="`${productName}`"
+        />
+      </picture>
+      <div class="product-details">
+        <p class="new-product overline" v-if="newProduct">New Product</p>
+        <h2>{{ productName }}</h2>
+        <p class="product-desc">
+          {{ productDesc }}
+        </p>
+        <ButtonOne :href="href" v-if="pageType === 'productCategory'" />
+        <div
+          class="product-add-to-cart"
+          v-else-if="pageType === 'productDetail'"
+        >
+          <p class="product-price">£{{ productPrice }}</p>
+          <div class="add-to-cart-form">
+            <div class="product-quantity">
+              <span @click="decreaseQuantity">-</span>
+              <input
+                type="number"
+                :value="this.quantity"
+                id="quantity"
+                min="1"
+              />
+              <span @click="increaseQuantity">+</span>
+            </div>
+            <ButtonOne
+              v-if="!this.addedToCart"
+              @click="addProductToCart(productName)"
+              class="add-to-cart-button"
+              >Add To Cart</ButtonOne
+            >
+            <ButtonOne
+              v-else-if="this.addedToCart"
+              @click="addProductToCart(productName)"
+              class="added-to-cart"
+              >Added To Cart</ButtonOne
+            >
           </div>
-          <ButtonOne
-            v-if="!this.addedToCart"
-            @click="addProductToCart(productName)"
-            class="add-to-cart-button"
-            >Add To Cart</ButtonOne
-          >
-          <ButtonOne
-            v-else-if="this.addedToCart"
-            @click="addProductToCart(productName)"
-            class="added-to-cart"
-            >Added To Cart</ButtonOne
-          >
         </div>
       </div>
     </div>
@@ -78,10 +96,9 @@ export default {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    // toggleAddedToCart() {
-    //   const toggle = false;
-    //   return !this.addedToCart;
-    // }
+    getShowCart() {
+      return this.$store.getters["cart"].showCart;
+    },
   },
   methods: {
     addProductToCart(product) {
@@ -99,6 +116,11 @@ export default {
           }, 2000);
         });
       this.$store.commit("cart/toggleShowCart");
+    },
+    cart() {
+      if (this.getShowCart === true) {
+        this.$store.commit("cart/toggleShowCart");
+      }
     },
     increaseQuantity() {
       this.quantity++;
@@ -119,16 +141,33 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.product-card-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 56px;
+
+  .back-button-nav {
+    .back-button {
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 25px;
+      letter-spacing: 0px;
+      color: #000;
+      opacity: 0.5;
+      margin-top: 79px;
+    }
+  }
+}
 .product-card {
   display: flex;
-  align-items: center;
-  margin-bottom: 160px;
-  padding: 0 165px;
-  // gap: 125px;
+  gap: 125px;
 
   picture {
     img {
       max-width: 540px;
+      border-radius: 8px;
     }
   }
   .product-details {
@@ -147,6 +186,7 @@ export default {
     .product-desc {
       margin-bottom: 40px;
       opacity: 0.5;
+      white-space: pre-line;
     }
 
     button {
@@ -206,9 +246,17 @@ export default {
 }
 
 @media screen and (max-width: 1023px) {
+  .back-button-nav {
+    margin: 33px 0 0px 40px;
+  }
+
+  .product-card-container {
+    gap: 24px;
+  }
   .product-card {
     margin-bottom: 120px;
     padding: 0 40px;
+    gap: 69px;
 
     picture {
       img {
@@ -243,10 +291,6 @@ export default {
     padding: 0 24px;
     gap: 32px;
     align-items: unset;
-    // img {
-    //   width: 100%;
-    //   max-width: unset;
-    // }
     .product-details {
       .new-product {
         margin-bottom: 24px;

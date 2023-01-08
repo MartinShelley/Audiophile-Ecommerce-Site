@@ -8,6 +8,7 @@
     <img
       class="linkArrow"
       src="./../../../assets/shared/desktop/icon-arrow-right.svg"
+      alt="Shop"
     />
   </div>
 </template>

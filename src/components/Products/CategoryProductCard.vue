@@ -10,7 +10,7 @@
         media="(min-width:768px)"
       />
       <source :srcset="require(`@/${productMobileImage}`)" />
-      <img :src="require(`@/${productDesktopImage}`)" />
+      <img :src="require(`@/${productDesktopImage}`)" :alt="`${productName}`" />
     </picture>
     <div class="product-details">
       <p class="new-product overline" v-if="newProduct">New Product</p>
@@ -78,10 +78,6 @@ export default {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
-    // toggleAddedToCart() {
-    //   const toggle = false;
-    //   return !this.addedToCart;
-    // }
   },
   methods: {
     addProductToCart(product) {
@@ -123,8 +119,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 160px;
-  padding: 0 165px;
-  // gap: 125px;
+  justify-content: center;
 
   picture {
     img {
@@ -240,10 +235,6 @@ export default {
   .product-card {
     padding: unset;
     gap: 32px;
-    // img {
-    //   width: 100%;
-    //   max-width: unset;
-    // }
     .product-details {
       .new-product {
         margin-bottom: 24px;

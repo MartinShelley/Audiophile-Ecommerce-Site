@@ -21,17 +21,16 @@
         media="(min-width: 481px)"
       />
       <source srcset="@/assets/shared/mobile/image-best-gear.jpg" />
-      <img src="@/assets/shared/desktop/image-best-gear.jpg" />
+      <img
+        src="@/assets/shared/desktop/image-best-gear.jpg"
+        alt="Bringing you the best audio gear"
+      />
     </picture>
   </section>
 </template>
 
 <style lang="scss" scoped>
 #shop-intro-banner {
-  // display: grid;
-  // grid-template-columns: 1fr 1fr;
-  //padding: 0 165px;
-  // column-gap: 125px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +70,6 @@
     gap: 63px;
 
     .banner-content {
-      // margin-top: 63px;
       text-align: center;
       max-width: 573px;
     }

@@ -25,14 +25,12 @@
         style="width: auto"
       />
     </picture>
-    <!-- <img src="../../assets/home/desktop/image-hero-original.jpg" /> -->
   </section>
 </template>
 
 <style lang="scss" scoped>
 section {
   display: flex;
-  //padding: 0 165px;
   background-color: #141313;
   min-height: 729px;
   justify-content: center;

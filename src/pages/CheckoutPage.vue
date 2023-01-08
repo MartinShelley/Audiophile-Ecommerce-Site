@@ -124,7 +124,6 @@
         <p class="subtitle form-section-heading">Payment Details</p>
         <div class="payment-section">
           <label>Payment Method</label>
-          <!-- <div id="credit-debit-card" class="payment-type"> -->
           <label id="credit-debit-card" class="payment-type"
             ><input
               type="radio"
@@ -137,8 +136,6 @@
               @blur="clearValidity('paymentMethod')"
             />Credit/Debit Card</label
           >
-          <!-- </div> -->
-          <!-- <div id="cash-on-delivery" class="payment-type"> -->
           <label id="cash-on-delivery" class="payment-type"
             ><input
               type="radio"
@@ -157,7 +154,6 @@
           >
             A Payment Method must be selected
           </p>
-          <!-- </div> -->
           <div id="selected-cash" v-show="paymentMethod.val === 'cash'">
             <img src="../assets/checkout/icon-cash-on-delivery.svg" />
             <p>
@@ -176,7 +172,7 @@
         <ul v-else>
           <li v-for="product in getProductsInCart" :key="product.productName">
             <div class="product">
-              <img :src="require(`../${product.cartImage}`)" />
+              <img :src="require(`../${product.cartImage}`)" alt="Cart" />
               <div class="product-details">
                 <div>
                   <p id="product-name">{{ product.shortName }}</p>
@@ -471,10 +467,6 @@ main {
 
         #cash-on-delivery {
           grid-column: 2 / 3;
-
-          // label {
-          //   margin-bottom: 0;
-          // }
         }
 
         .payment-type {
@@ -665,10 +657,6 @@ main {
     .back-button-nav {
       padding: 138px 0 24px;
     }
-
-    // .checkout {
-    //   grid-template-columns: 1fr;
-    // }
   }
 }
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 export default {
   addToCart({ commit, state, dispatch }, payload) {
     const productExists = state.productsInCart.find(product =>
@@ -47,7 +46,6 @@ export default {
   },
   removeAllFromCart({ commit }) {
     commit("removeAllFromCart");
-    // commit("resetCartQuantity");
   },
   updateCartTotalPrice({ commit, state }, payload) {
     const cartNewTotal = state.cartTotal + payload.productPrice * payload.quantity;
