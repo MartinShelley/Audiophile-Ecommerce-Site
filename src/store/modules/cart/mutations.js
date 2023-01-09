@@ -6,7 +6,6 @@ export default {
       "productPriceString": payload.productPriceString,
       "productPrice": payload.productPrice
     });
-    console.log(state.productsInCart);
   },
   removeProductFromCart(state, payload) {
     state.productsInCart = state.productsInCart.filter((product) => {

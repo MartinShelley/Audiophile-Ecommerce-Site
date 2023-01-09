@@ -270,13 +270,11 @@ export default {
         this.formIsValid = false;
       }
       if (this.email.val === "") {
-        console.log("empty email");
         this.email.isValid = false;
         this.email.errorType = "empty";
         this.formIsValid = false;
       }
       if (!/^[^@]+@\w+(\.\w+)+\w$/.test(this.email.val)) {
-        console.log("invalid email");
         this.email.isValid = false;
         this.email.errorType = "invalid";
         this.formIsValid = false;
@@ -307,8 +305,6 @@ export default {
       }
     },
     submitForm() {
-      console.log("subitted form");
-      console.log(this.paymentMethod);
       this.checkFormIsValid();
 
       if (!this.formIsValid) {
@@ -318,7 +314,6 @@ export default {
       this.showConfirmationOverlay = true;
     },
     togglePaymentMethod(paymentType) {
-      console.log("togglePaymentMethod");
       if (paymentType === "cash") {
         this.paymentMethod.val = "cash";
       } else if (paymentType === "card") {

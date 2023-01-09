@@ -39,7 +39,6 @@ export default {
     const cartExpiry = localStorage.getItem("cartExpiry");
     //if cart time has expired reset cart
     if (cartExpiry < timeNow.getTime()) {
-      console.log("no cartExpiry or cart expired");
       this.$store.dispatch("cart/removeAllFromCart");
       localStorage.setItem("cartExpiry", null);
     }
