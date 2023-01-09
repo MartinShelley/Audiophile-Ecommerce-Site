@@ -1,6 +1,6 @@
 # Frontend Mentor - Audiophile e-commerce website solution
 
-This is a solution to the [Audiophile e-commerce website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/audiophile-ecommerce-website-C8cuSd_wx). This is my first project using Vuejs and learning about some of the key features such as components and how they communicate, Vue Router, VueX to name a few. Any feedback would be greatly appreciated.
+This is a solution to the [Audiophile e-commerce website challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/audiophile-ecommerce-website-C8cuSd_wx). This is my first project using Vuejs and learning about some of the key features such as components and how they communicate, Vue Router, VueX & Firebase deployment to name a few. Any feedback would be greatly appreciated.
 
 ## Table of contents
 
@@ -53,32 +53,11 @@ Users should be able to:
 - VueX
 - Accessibility
 - JSON-server (https://www.npmjs.com/package/json-server)
+- Firebase Realtime Database
+- Firebase Hosting
 
 ### Continued development
 
 Some areas that could be looked into to improve the website:
 - Payment Integration (Stripe)
 - User Authentication
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
